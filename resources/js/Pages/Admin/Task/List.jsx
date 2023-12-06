@@ -26,7 +26,6 @@ import Create from "./Create";
 
 export default function List({ data, Id, developer }) {
     const [page, setPage] = useState(0);
-    console.log(developer, "datttt");
     const [expandedRows, setExpandedRows] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const { item, setItem, get, post, processing, errors, reset } = useForm();
@@ -140,6 +139,7 @@ export default function List({ data, Id, developer }) {
                                             page * rowsPerPage + rowsPerPage
                                         )
                                         .map((item, j) => {
+                                            console.log(item.status,'iiii');
                                             return (
                                                 <>
                                                     <TableRow key={j + 1}>

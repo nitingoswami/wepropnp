@@ -64,14 +64,6 @@ export default function ProjectDetail({ user, data, auth }) {
                             {data.title}
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Typography sx={{ fontWeight: "bold" }}>
-                            End Date
-                        </Typography>
-                        <Typography>
-                            <FormatDate date={data.end_date} />
-                        </Typography>
-                    </Grid>
 
                     <Grid item xs={4}>
                         <Typography sx={{ fontWeight: "bold" }}>
@@ -81,10 +73,7 @@ export default function ProjectDetail({ user, data, auth }) {
                             <FormatDate date={data.start_date} />
                         </Typography>
                     </Grid>
-                </Grid>
-                <br />
-                <Grid container className="px-3">
-                    <Grid item xs={12}>
+                    <Grid item xs={4}>
                         <Typography sx={{ fontWeight: "bold" }}>
                             Prject Manager
                         </Typography>
@@ -94,6 +83,17 @@ export default function ProjectDetail({ user, data, auth }) {
                     </Grid>
                 </Grid>
                 <br />
+                {/* <Grid container className="px-3">
+                    <Grid item xs={12}>
+                        <Typography sx={{ fontWeight: "bold" }}>
+                            Prject Manager
+                        </Typography>
+                        <Typography className="capitalize">
+                            <Chip color="primary" label={data.project_manager} />
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <br /> */}
                 <Grid container className="px-3">
                     <Grid item xs={12}>
                         <Typography sx={{ fontWeight: "bold" }}>

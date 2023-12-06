@@ -3,19 +3,19 @@ const ChipColor ={
             title:"Admin",
             color:"#1976d2",
         },
-        "hr_manager":{
+        "hr manager":{
             title:"HR Manager",
             color:"#00bcd4",
         },
-        "project_manager":{
+        "project manager":{
             title:"Project Manager",
             color:"#2e7d32",
         },
-        "senior_developer":{
+        "senior developer":{
             title:"Senior Developer",
             color:"#757575",
         },
-         "junior_developer":{
+         "junior developer":{
             title:"Junior Developer",
             color:"#e39a9a",
         }

@@ -82,8 +82,7 @@ class TaskRepository implements TaskInterface
         $task->priority =$data['priority'];
         $task->status =$data['status'];
         $task->level = $data['level'];
-        // $task->developer_id =$data['developer_id'];
-        // $task->update($request->only(['task_name','description','priority','status','developer_id']));
+      
         $task->save();
         $task->update(['developer_id'=>$dev_id]);
 
@@ -97,9 +96,6 @@ class TaskRepository implements TaskInterface
 
     public function detail($id)
     {
-        $url = url()->current();
-        //  $segments=$url->segments();
-        dd($url);
 
         $data = Task::findOrfail($id);
 
@@ -109,4 +105,17 @@ class TaskRepository implements TaskInterface
         return [$data , $user];
     }
 
+    public function status($id,$data)
+    {
+
+        $item = $data['status'];
+        $task = Task::where('id', $id)->first();
+
+    if ($task) {
+        $task->update(['status' => $item]);
+        return true;
+    }
+
+    return false;
+    }
 }

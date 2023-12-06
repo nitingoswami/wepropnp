@@ -11,4 +11,6 @@ interface TaskInterface
     public function update($id,$data);
     public function detail($id);
 
+    public function status($id,$data);
+
 }

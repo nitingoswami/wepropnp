@@ -12,8 +12,8 @@ class ProjectRepository implements ProjectInterface
 {
     public function getlist()
     {
-        $developer = User::whereIn('user_role',['senior_developer','junior_developer'])->get();
-        $manager = User::where('user_role','project_manager')->get();
+        $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
+        $manager = User::where('user_role','project manager')->get();
         $data = Project::all();
         return [$data , $developer ,$manager];
     }
@@ -57,8 +57,8 @@ class ProjectRepository implements ProjectInterface
         $developer = array_map('intval', explode(',', $dev[0]));
         $developer = array_unique($developer);
 
-        $manager = User::whereIn('user_role', ['project_manager'])->pluck('name');
-        $devUsers = User::select('id', 'name', 'user_role')->whereIn('user_role', ['junior_developer', 'senior_developer'])->get();
+        $manager = User::whereIn('user_role', ['project manager'])->pluck('name');
+        $devUsers = User::select('id', 'name', 'user_role')->whereIn('user_role', ['junior developer', 'senior developer'])->get();
         return [ 'success' => true ,
             $data,  $devUsers,  $manager, $developer];
         } catch (\Throwable $th) {

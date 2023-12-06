@@ -277,7 +277,7 @@ export default function CreateModal({developer , Id}) {
                                     className="ms-4"
                                     variant="contained"
                                     disabled={processing}
-                                    style={{ height:"40px" ,backgroundColor:'#1976d2'}}
+                                    style={{ height:"40px" ,}}
                                 >
                                     Create Task
                                 </PrimaryButton>

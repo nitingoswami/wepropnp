@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             $table->integer('level');
-            $table->time('hour_worked')->default(0);
-            $table->blob('images');
+            $table->float('hour_worked',10,2)->default(0);
             $table->string('status')->default('new')->change();
         });
     }
@@ -27,7 +26,6 @@ return new class extends Migration
         Schema::table('tasks', function (Blueprint $table) {
             $table->dropColumn('level');
             $table->dropColumn('hour_worked');
-            $table->dropColumn('images');
             $table->string('status')->default('new')->change();
         });
     }

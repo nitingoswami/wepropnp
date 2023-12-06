@@ -70,8 +70,4 @@ class UserController extends Controller
         return back();
     }
 
-    public function salary(Request $request){
-        $this->userRepository->salary($request->all());
-        return Redirect::route('user.list');
-    }
 }

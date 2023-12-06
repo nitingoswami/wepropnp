@@ -6,16 +6,25 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { Button, Select, Typography } from "@mui/material";
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    Select,
+    Typography,
+} from "@mui/material";
 
 export default function Create({ auth }) {
-    const { data, setData,get, post, processing, errors, reset } = useForm({
+    const { data, setData, get, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
         password_confirmation: "",
         user_role: "",
-        salary:"",
+        salary: "",
     });
 
     const submit = (e) => {
@@ -150,7 +159,7 @@ export default function Create({ auth }) {
 
                             <TextInput
                                 id="contact_no"
-                                type="text"
+                                type="number"
                                 name="contact_no"
                                 value={data.contact_no}
                                 className="mt-1 block w-full"
@@ -166,7 +175,7 @@ export default function Create({ auth }) {
                                 className="mt-2"
                             />
                         </div>
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <InputLabel
                                 htmlFor="user_role"
                                 value="Select User Role"
@@ -198,6 +207,57 @@ export default function Create({ auth }) {
                                 message={errors.user_role}
                                 className="mt-2"
                             />
+                        </div> */}
+                        <div className="mt-4">
+                            <FormControl component="fieldset">
+                                <InputLabel
+                                    htmlFor="user_role"
+                                    value="Select User Role"
+                                />
+                                <RadioGroup
+                                    value={data.user_role}
+                                    onChange={(e) =>
+                                        setData("user_role", e.target.value)
+                                    }
+                                    row
+                                >
+                                    <FormControlLabel
+                                        value="admin"
+                                        control={<Radio />}
+                                        label="Admin"
+                                        aria-setsize={"small"}
+                                    />
+                                    <FormControlLabel
+                                        value="hr_manager"
+                                        control={<Radio />}
+                                        label="HR Manager"
+                                        aria-setsize={"small"}
+                                    />
+                                    <FormControlLabel
+                                        value="project_manager"
+                                        control={<Radio />}
+                                        label="Project Manager"
+                                        aria-setsize={"small"}
+                                    />
+                                    <FormControlLabel
+                                        value="senior_developer"
+                                        control={<Radio />}
+                                        label="Senior Developer"
+                                        aria-setsize={"small"}
+                                    />
+                                    <FormControlLabel
+                                        value="junior_developer"
+                                        control={<Radio />}
+                                        label="Junior Developer"
+                                        aria-setsize={"small"}
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+
+                            <InputError
+                                message={errors.user_role}
+                                className="mt-2"
+                            />
                         </div>
 
                         {data.user_role === "admin" ? (
@@ -215,42 +275,44 @@ export default function Create({ auth }) {
                             </div>
                         ) : (
                             <>
-                            <div className="mt-4">
-                            <InputLabel htmlFor="salary" value="Salary" />
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="salary"
+                                        value="Salary"
+                                    />
 
-                            <TextInput
-                                id="salary"
-                                type="text"
-                                name="salary"
-                                value={data.salary}
-                                className="mt-1 block w-full"
-                                autoComplete="consalarytact_no"
-                                onChange={(e) =>
-                                    setData("salary", e.target.value)
-                                }
-                                required
-                            />
+                                    <TextInput
+                                        id="salary"
+                                        type="number"
+                                        name="salary"
+                                        value={data.salary}
+                                        className="mt-1 block w-full"
+                                        autoComplete="consalarytact_no"
+                                        onChange={(e) =>
+                                            setData("salary", e.target.value)
+                                        }
+                                        required
+                                    />
 
-                            <InputError
-                                message={errors.salary}
-                                className="mt-2"
-                            />
-                        </div>
-                            <div className="flex items-center justify-center m-4">
-                                <PrimaryButton
-                                    className="ms-4"
-                                    disabled={processing}
-                                    style={{
-                                        height: "40px",
-                                        backgroundColor: "#1976d2",
-                                    }}
-                                >
-                                    Next
-                                </PrimaryButton>
-                            </div>
+                                    <InputError
+                                        message={errors.salary}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div className="flex items-center justify-center m-4">
+                                    <PrimaryButton
+                                        className="ms-4"
+                                        disabled={processing}
+                                        style={{
+                                            height: "40px",
+                                            backgroundColor: "#1976d2",
+                                        }}
+                                    >
+                                        Next
+                                    </PrimaryButton>
+                                </div>
                             </>
                         )}
-
                     </form>
                 </div>
             </div>

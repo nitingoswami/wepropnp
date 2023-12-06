@@ -1,17 +1,21 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import FormatDate from "@/Util/FormatDate";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Chip, Grid, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, IconButton, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import DateTimeFormat from "@/Util/DateTimeFormat";
 import StatusStyle from "@/Constant/StatusStyle";
 import Edit from "./Edit";
 import { useState } from "react";
+import StatusPopup from "./StatusPopup";
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function Details({data ,developer}){
 
     const { item, setItem,get, post, processing, errors, reset } = useForm();
-    const [status ,setStatus] = useState(data.status);
+    const [state ,setState] = useState({
+        status : data.status,
+    });
 
     const [isEdit , setIsEdit] = useState(false);
     const handleUpdate = (id)=>{
@@ -25,10 +29,13 @@ export default function Details({data ,developer}){
          setIsEdit(true);
     }
     const handleChange = (e) =>{
-        setStatus(e.target.value);
+        setState({'status':e.target.value});
+    }
+
+    const statusSubmit = () => {
+        router.post(route('project.task.status',{id:data.id}),state);
         setIsEdit(false);
     }
-    console.log(status,'statutu');
 
     return (
        <>
@@ -45,7 +52,8 @@ export default function Details({data ,developer}){
                 <Grid
                     item
                     xs={12}
-                    style={{ background: "rgb(236 236 236)", display: "flex" ,justifyContent:"space-between" ,alignItems:"center"}}
+                    style={{ background: "rgb(236 236 236)", display: "flex" ,justifyContent:"space-between" 
+                    ,alignItems:"center"}}
                 >
             <Typography sx={{ fontWeight: "bold",marginLeft:"10px"}} >Task Information</Typography>
            
@@ -64,45 +72,56 @@ export default function Details({data ,developer}){
                 <Typography>{data.priority}</Typography>
             </Grid>
             <Grid item xs={4}>
-                <Typography sx={{fontWeight:"bold"}}>status</Typography>
-                <Typography className="capitalize"><Chip label={status} 
-                style={{ background:StatusStyle.ChipColor[status].color,color:'white' }} 
-                onClick={handleStatus}/>
-                </Typography>
+                <Typography sx={{fontWeight:"bold"}}>Status</Typography>
                {
-                isEdit && 
-                <Box component={'form'}>
+                isEdit ? 
+                <Box component={'form'} onSubmit = {statusSubmit}>
                    <Select
-                                        value={status}
+                                        value={state.status}
                                         name="status"
                                         style={{
                                             height: "42px",
                                         }}
+                                        size="20px"
                                         className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1  "
                                         onChange={handleChange}
                                         required
                                     >
-                                        <MenuItem>Choose Status</MenuItem>
-                                        <MenuItem value={"New"}>New</MenuItem>
-                                        <MenuItem value={"Started"}>
+                                        <MenuItem value={"new"}>New</MenuItem>
+                                        <MenuItem value={"started"}>
                                             Started
                                         </MenuItem>
-                                        <MenuItem value={"Complete"}>
+                                        <MenuItem value={"complete"}>
                                             Complete
                                         </MenuItem>
-                                        <MenuItem value={"Pause"}>
+                                        <MenuItem value={"pause"}>
                                             Pause
                                         </MenuItem>
                                     </Select>
+                                    <IconButton color="primary" aria-label="save">
+                                         <CheckIcon color="primary" sx={{fontSize:"30px" , fontWeight:"bold"}} onClick={statusSubmit}/>
+                                 </IconButton>
                                    
-                </Box>
+                </Box> :
+                 <div style={{ display:'flex' , alignItems:"center"}}>
+                 <Typography className="capitalize"><Chip label={state.status} 
+                     style={{ background:StatusStyle.ChipColor[state.status].color,color:'white' }} 
+                     />
+                 </Typography> 
+                 <IconButton color="primary" aria-label="edit">
+                     <EditIcon color="primary" onClick={handleStatus}/>
+                 </IconButton>
+             </div>
+               }
+               {
+                state.status == 'Complete' && <StatusPopup/>
                }
             </Grid>
        </Grid>
        <br/>
        <Grid container >
        <Grid item xs={4}>
-                <Typography sx={{fontWeight:"bold"}}>Lavel </Typography>
+                <Typography sx={{fontWeight:"bold"}}>Level </Typography>
                 <Typography>{data.level}</Typography>
 
             </Grid>
@@ -152,7 +171,7 @@ export default function Details({data ,developer}){
                 <Typography
                     sx={{ fontWeight: "bold", marginLeft: "10px" }}
                 >
-                    Developer Information
+                    Developers
                 </Typography>
             </Grid>
         </Grid>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditProjectRequest extends FormRequest
+class SalaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,14 @@ class EditProjectRequest extends FormRequest
      */
     public function rules(): array
     {
-       
-            return [
-                'title'=>['required','string'],
-                'description' => ['required','string'],
-                'start_date' => ['required'],
-                'project_manager' => ['required'],
-                // 'developer' => ['required'],
-            ];
+        return [
+            'medical_conveyance'=>['required'],
+            'basic_salary' => ['required'],
+            'house_rent' => ['required'],
+            'leave_allowance' => ['required'],
+            'statutory_bonus' => ['required'],
+            'tax_deducted' => ['required'],
+            'provided_fund' => ['required'],
+        ];
     }
 }

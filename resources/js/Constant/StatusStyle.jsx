@@ -1,17 +1,17 @@
 const ChipColor ={
-    'New':{
+    'new':{
         title:'New',
         color:"#1976d2",
     },
-    'Started':{
+    'started':{
         title:'Started',
         color:"#00bcd4"
     },
-    'Complete':{
+    'complete':{
         title:'Complete',
         color:'#2e7d32',
     },
-    'Pause':{
+    'pause':{
         title:'Pause',
         color:'#757575',
     }

@@ -55,6 +55,7 @@ class TaskController extends Controller
         $developer = $items[1];
         $user = $items[2];
         return Inertia::render('Admin/Task/Edit',['data'=>$data ,'devId'=>$developer, 'developer'=>$user]);
+        // Redirect::back();
     }
 
     public function update(Request $request,$id){
@@ -72,5 +73,10 @@ class TaskController extends Controller
         $data = $items[0];
         $user = $items[1];
         return Inertia::render('admin/task/Details',['data'=>$data , 'developer'=>$user]);
+    }
+
+    public function status(Request $request, $id){
+        $this->taskRepository->status($id,$request->only('status'));
+        return Redirect::back();
     }
 }

@@ -228,14 +228,14 @@ export default function Edit({ data, developer, devId }) {
                                         required
                                     >
                                         <MenuItem>Choose Status</MenuItem>
-                                        <MenuItem value={"New"}>New</MenuItem>
-                                        <MenuItem value={"Started"}>
+                                        <MenuItem value={"new"}>New</MenuItem>
+                                        <MenuItem value={"started"}>
                                             Started
                                         </MenuItem>
-                                        <MenuItem value={"Complete"}>
+                                        <MenuItem value={"complete"}>
                                             Complete
                                         </MenuItem>
-                                        <MenuItem value={"Pause"}>
+                                        <MenuItem value={"pause"}>
                                             Pause
                                         </MenuItem>
                                     </Select>

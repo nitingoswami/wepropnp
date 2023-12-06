@@ -38,7 +38,7 @@ class SalaryRepository implements SalaryInterface
 
     public function detail($id)
     {
-        $data = $this->salaryRepository->detail($id);
+        
     }
 
     public function edit()

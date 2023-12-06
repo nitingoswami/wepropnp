@@ -24,6 +24,7 @@ const style = {
   
 
 export default function Create({ auth, developer, manager }) {
+    console.log(manager ,'mnagerrr');
     const [selectedDevelopers, setSelectedDevelopers] = useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -61,7 +62,7 @@ export default function Create({ auth, developer, manager }) {
     };
     return (
         <div>
-        <Button variant="contained" onClick={handleOpen} startIcon={<AddIcon/>}>
+        <Button variant="contained" onClick={handleOpen} size="small" startIcon={<AddIcon/>}>
                                   Create
                               </Button>
         <Modal
@@ -159,13 +160,21 @@ export default function Create({ auth, developer, manager }) {
                             >
                                 <option>Select manager</option>
 
-                                {manager.map((mngr, index) => {
-                                    return (
-                                        <option value={mngr.name} key={index}>
-                                            {mngr.name} ({mngr.email})
-                                        </option>
-                                    );
-                                })}
+                                {
+                                    manager.length == 0 ?
+                                    <option>Don't have project Manager</option>
+                                    :
+                                    (
+                                        manager.map((mngr, index) => {
+                                        return (
+                                            <option value={mngr.name} key={index}>
+                                                {mngr.name} ({mngr.email})
+                                            </option>
+                                        );
+                                    })
+                                    )
+
+                                }
                             </select>
                             <InputError
                                 message={errors.project_manager}
@@ -199,19 +208,24 @@ export default function Create({ auth, developer, manager }) {
                                 //     </div>
                                 // )}
                             >
-                                {developer.map((dev, index) => (
+                                {
+                                    developer.length == 0 ?
+                                    <MenuItem>Don't have any Developer</MenuItem>
+                                    :
+                                (developer.map((dev, index) => (
                                     <MenuItem
                                         key={index}
                                         value={dev.id}
                                         label={dev.name}
                                     >
                                         {dev.name} (
-                                        {dev.user_role == "senior_developer"
+                                        {dev.user_role == "senior developer"
                                             ? "Senior"
                                             : "Junior"}
                                         )
                                     </MenuItem>
-                                ))}
+                                ))
+                            )}
                             </Select>
                             <InputError
                                 message={errors.developer}

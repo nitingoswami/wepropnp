@@ -1,3 +1,5 @@
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useForm } from "@inertiajs/react";
 import {
@@ -84,7 +86,12 @@ export default function Create({auth}) {
                         value={data.basic_salary}
                         autoComplete="basic_salary"
                         onChange={handleChange}
+                        size="small"
                     />
+                     <InputError
+                                message={errors.basic_salary}
+                                className="mt-2"
+                            />
                 </div>
                 <div className="pb-5">
                     <InputLabel sx={{ fontWeight:"500" }}>House Rent</InputLabel>
@@ -97,7 +104,12 @@ export default function Create({auth}) {
                         value={data.house_rent}
                         autoComplete="house_rent"
                         onChange={handleChange}
+                        size="small"
                     />
+                     <InputError
+                                message={errors.house_rent}
+                                className="mt-2"
+                            />
                 </div>
                 <div className="pb-5">
                     <InputLabel sx={{ fontWeight:"500" }}>Leave And Travel Allowance</InputLabel>
@@ -110,7 +122,13 @@ export default function Create({auth}) {
                         value={data.leave_allowance}
                         autoComplete="leave_allowance"
                         onChange={handleChange}
+                        size="small"
+
                     />
+                    <InputError
+                                message={errors.leave_allowance}
+                                className="mt-2"
+                            />
                 </div>
                 <div className="pb-5">
                     <InputLabel sx={{ fontWeight:"500" }}>Medical And Conveyance</InputLabel>
@@ -123,7 +141,13 @@ export default function Create({auth}) {
                         value={data.medical_conveyance}
                         autoComplete="medical_conveyance"
                         onChange={handleChange}
+                        size="small"
+
                     />
+                    <InputError
+                                message={errors.medical_conveyance}
+                                className="mt-2"
+                            />
                 </div>
                 <div className="pb-5">
                     <InputLabel sx={{ fontWeight:"500" }}>Statutory Bonus</InputLabel>
@@ -136,7 +160,13 @@ export default function Create({auth}) {
                         value={data.statutory_bonus}
                         autoComplete="statutory_bonus"
                         onChange={handleChange}
+                        size="small"
+
                     />
+                    <InputError
+                                message={errors.statutory_bonus}
+                                className="mt-2"
+                            />
                 </div>
                 <div className="pb-5" style={{ display: "flex" }}>
                     <div style={{ width: "50%", paddingRight: "5px" }}>
@@ -150,7 +180,13 @@ export default function Create({auth}) {
                             value={data.tax_deducted}
                             autoComplete="tax_deduct"
                             onChange={handleChange}
+                            size="small"
+
                         />
+                        <InputError
+                                message={errors.tax_deducted}
+                                className="mt-2"
+                            />
                     </div>
                     <div style={{ width: "50%" }}>
                         <InputLabel sx={{ fontWeight:"500" }}>Provided Fund</InputLabel>
@@ -163,7 +199,13 @@ export default function Create({auth}) {
                             value={data.provided_fund}
                             autoComplete="provided_fund"
                             onChange={handleChange}
+                            size="small"
+
                         />
+                        <InputError
+                                message={errors.provided_fund}
+                                className="mt-2"
+                            />
                     </div>
                 </div>
                 <div className="pb-5" style={{ display: "flex" }}>
@@ -182,7 +224,13 @@ export default function Create({auth}) {
                             width="50"
                             onClick={GrossSalary}
                             autoComplete="gross_salary"
+                            size="small"
+
                         />
+                         <InputError
+                                message={errors.gross_salary}
+                                className="mt-2"
+                            />
                     </div>
                     <div style={{ width: "50%" }}>
                         <InputLabel
@@ -199,13 +247,24 @@ export default function Create({auth}) {
                             value={data.net_salary}
                             autoComplete="net_salary"
                             onClick={totalSalary}
+                            size="small"
                         />
+                        <InputError
+                                message={errors.net_salary}
+                                className="mt-2"
+                            />
                     </div>
                 </div>
-               <div className="flex items-center justify-center m-4">
-                    <Button variant="contained" onClick={handleSubmit} className="center" sx={{ height:"40px",width:'150px' }}>
-                        Save
-                    </Button>
+               <div className="flex items-center justify-center m-8">
+                        <PrimaryButton
+                                    className="ms-4"
+                                    variant="contained"
+                                    disabled={processing}
+                                    style={{ height:"40px" ,}}
+                                >
+                                    Save 
+                                </PrimaryButton>
+
                 </div>
             </Box>
         </Container>

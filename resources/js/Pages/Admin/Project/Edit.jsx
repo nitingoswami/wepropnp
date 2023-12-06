@@ -154,7 +154,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                 <MenuItem>Select Developer</MenuItem>
                                 {developer.map((dev) => (
                                     <MenuItem key={dev.name} value={dev.id} >
-                                        {dev.name} ({dev.user_role=="senior_developer"? "Senior" : "Junior"})
+                                        {dev.name} ({dev.user_role=="senior developer"? "Senior" : "Junior"})
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -166,12 +166,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                         </div>
 
 
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "",
-                            }}
-                        >
+                        
                             <div className="mt-4">
                                 <InputLabel
                                     htmlFor="start_date"
@@ -183,8 +178,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                     type="date"
                                     name="start_date"
                                     value={item.start_date}
-                                    className="mt-1 "
-                                    style={{ width: "526px" }}
+                                    className="mt-1 block w-full"
                                     autoComplete="start_date"
                                     onChange={(e) => handleChange(e)}
                                     required
@@ -195,7 +189,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                 />
                             </div>
 
-                            <div className="mt-4">
+                            {/* <div className="mt-4">
                                 <InputLabel
                                     htmlFor="end_date"
                                     value="End Date"
@@ -207,7 +201,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                     type="date"
                                     name="end_date"
                                     style={{
-                                        width: "526px",
+                                        width: "405px",
                                         marginLeft: "20px",
                                     }}
                                     value={item.end_date}
@@ -220,8 +214,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                     message={errors.end_date}
                                     className="mt-2"
                                 />
-                            </div>
-                        </div>
+                            </div> */}
 
                         <div className="flex items-center justify-center m-8">
 
