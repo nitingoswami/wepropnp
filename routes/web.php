@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SalaryController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Inertia\Inertia;
 
 /*
@@ -31,13 +32,16 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::prefix('admin')->middleware('auth')->group(function () {
 
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::prefix('profile')->group( function() {
             Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -80,11 +84,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::get('/edit/{id}','edit')->name('task');
             Route::post('/update/{id}','update')->name('update');
             Route::get('/detail/{id}','details')->name('detail');
+            Route::post('/status/{id}' , 'status')->name('status');
         });
     });
-
-
-
 });
 
 require __DIR__.'/auth.php';

@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-   
+
     public function create(): Response
     {
         return Inertia::render('Auth/Login', [
@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         $role = User::where(['email'=>$request->email])->first();
         $data = User::all();
         if($role->user_role == "admin"){
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended('admin/dashboard');
         }else{
             return redirect()->intended('/');
         }
@@ -59,5 +59,5 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    
+
 }

@@ -4,14 +4,14 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import Menu from './Constant/Menu';
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ user, header, children, auth }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const url = window.location.pathname;
     const urlParts = url.split('/');
-
     const id = urlParts[urlParts.length - 1];
-
+    const [activeNow, setActiveNow] = useState(route().current());
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -24,33 +24,15 @@ export default function Authenticated({ user, header, children }) {
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link> */}
                             </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('user.list')}active={route().current('user.list') ||
-                                 route().current('user.create') || route().current('user.edit') || route().current('user.detail')}>
-                                    Users
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('project.list')}active={route().current('project.list')
-                                 || route().current('project.create') || route().current('project.detail')
-                                 || route().current('project.edit') || route().current('task.create',id) || route().current('task.list',id)
-                                 || route().current('task.edit',id) || route().current('task.detail',id)}>
-                                    Project
-                                </NavLink>
-                            </div>
-                            {/* <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('create-task')} active={route().current('task-detail') || route().current('task-view')
-                            || route().current('edit-task') }>
-                                    TASK
-                                </NavLink>
-                            </div> */}
-
+                            {Menu[user.user_role].map((value, index) => {
+                                return(
+                                    <div key={index} className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink href={route(value.route)} active={value.active.includes(activeNow)}>
+                                            {value.title}
+                                        </NavLink>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
