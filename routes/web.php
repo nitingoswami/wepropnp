@@ -84,6 +84,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/edit/{id}','edit')->name('task');
             Route::post('/update/{id}','update')->name('update');
             Route::get('/detail/{id}','details')->name('detail');
+
+            Route::post('/status/{id}' , 'status')->name('status');
+
         });
     });
 });
