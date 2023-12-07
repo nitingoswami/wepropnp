@@ -53,7 +53,7 @@ export default function Create({ developer, Id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("project.task.save", { id: Id }));
+        post(route("admin.project.task.save", { id: Id }));
 
         setOpen(false);
 

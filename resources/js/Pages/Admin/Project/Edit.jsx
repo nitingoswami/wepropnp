@@ -52,7 +52,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route("project.update", [data.id]), item);
+        router.post(route("admin.project.update", [data.id]), item);
     };
 
     return (

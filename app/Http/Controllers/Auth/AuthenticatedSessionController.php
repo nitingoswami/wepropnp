@@ -36,12 +36,13 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        $role = User::where(['email'=>$request->email])->first();
+        $user = User::where(['email'=>$request->email])->first();
         $data = User::all();
-        if($role->user_role == "admin"){
+        if($user->user_role == "admin"){
             return redirect()->intended('admin/dashboard');
-        }else{
-            return redirect()->intended('/');
+        } else if($user->user_role == "project manager"){
+            // dd($user->user_role);
+            return redirect()->intended('project-manager/dashboard');
         }
     }
 

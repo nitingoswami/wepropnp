@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Inertia\Inertia;
+use App\Http\Controllers\ProjectManager\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::get('/', function () {
 
 
 
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
@@ -91,4 +92,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
+Route::prefix('project-manager')->name('projectManager.')->middleware(['auth', 'role:project manager'])->group(function () {
+    Route::prefix('dashboard')->name('dashboard')->controller(DashboardController::class)->group( function () {
+        Route::get('/','index');
+    });
+});
+
 require __DIR__.'/auth.php';
+

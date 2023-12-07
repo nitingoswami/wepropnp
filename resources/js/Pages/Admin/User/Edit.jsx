@@ -27,7 +27,7 @@ export default function Edit({ auth, user }) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route("user.update", [user.id]), value);
+        router.post(route("admin.user.update", [user.id]), value);
     };
 
     return (

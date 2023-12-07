@@ -61,7 +61,7 @@ export default function Create({auth}) {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("user.salary.save", params.user));
+        post(route("admin.user.salary.save", params.user));
     };
     return (
        <AuthenticatedLayout user={auth.user}>
@@ -262,7 +262,7 @@ export default function Create({auth}) {
                                     disabled={processing}
                                     style={{ height:"40px" ,}}
                                 >
-                                    Save 
+                                    Save
                                 </PrimaryButton>
 
                 </div>

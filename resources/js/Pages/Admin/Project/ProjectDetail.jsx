@@ -22,7 +22,7 @@ export default function ProjectDetail({ user, data, auth }) {
     console.log(user,'datatt');
 
     const handleUpdate = (id) => {
-        get(route("project.edit", { id }));
+        get(route("admin.project.edit", { id }));
     };
 
     return (

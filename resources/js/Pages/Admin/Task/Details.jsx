@@ -19,7 +19,7 @@ export default function Details({data ,developer}){
 
     const [isEdit , setIsEdit] = useState(false);
     const handleUpdate = (id)=>{
-        get(route('project.task.edit',{id}));
+        get(route('admin.project.task.edit',{id}));
     }
 
     const dev_id= (data.developer_id.split(','));
@@ -33,7 +33,7 @@ export default function Details({data ,developer}){
     }
 
     const statusSubmit = () => {
-        router.post(route('project.task.status',{id:data.id}),state);
+        router.post(route('admin.project.task.status',{id:data.id}),state);
         setIsEdit(false);
     }
 
@@ -52,11 +52,11 @@ export default function Details({data ,developer}){
                 <Grid
                     item
                     xs={12}
-                    style={{ background: "rgb(236 236 236)", display: "flex" ,justifyContent:"space-between" 
+                    style={{ background: "rgb(236 236 236)", display: "flex" ,justifyContent:"space-between"
                     ,alignItems:"center"}}
                 >
             <Typography sx={{ fontWeight: "bold",marginLeft:"10px"}} >Task Information</Typography>
-           
+
             <Edit devId={dev.id} developer={developer} data={data} sx={{display:'flex',justifyContent:"end"}}/>
 
             </Grid>
@@ -74,7 +74,7 @@ export default function Details({data ,developer}){
             <Grid item xs={4}>
                 <Typography sx={{fontWeight:"bold"}}>Status</Typography>
                {
-                isEdit ? 
+                isEdit ?
                 <Box component={'form'} onSubmit = {statusSubmit}>
                    <Select
                                         value={state.status}
@@ -101,13 +101,13 @@ export default function Details({data ,developer}){
                                     <IconButton color="primary" aria-label="save">
                                          <CheckIcon color="primary" sx={{fontSize:"30px" , fontWeight:"bold"}} onClick={statusSubmit}/>
                                  </IconButton>
-                                   
+
                 </Box> :
                  <div style={{ display:'flex' , alignItems:"center"}}>
-                 <Typography className="capitalize"><Chip label={state.status} 
-                     style={{ background:StatusStyle.ChipColor[state.status].color,color:'white' }} 
+                 <Typography className="capitalize"><Chip label={state.status}
+                     style={{ background:StatusStyle.ChipColor[state.status].color,color:'white' }}
                      />
-                 </Typography> 
+                 </Typography>
                  <IconButton color="primary" aria-label="edit">
                      <EditIcon color="primary" onClick={handleStatus}/>
                  </IconButton>
@@ -276,7 +276,7 @@ export default function Details({data ,developer}){
                            )
                         ))
                        ))
-                           }  
+                           }
                     </Box>
     </Box>
 

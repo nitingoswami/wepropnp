@@ -61,7 +61,7 @@ export default function Edit({ data, developer, devId }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route("project.task.update", { id: data.id }), item);
+        router.post(route("admin.project.task.update", { id: data.id }), item);
         setOpen(false);
     };
 

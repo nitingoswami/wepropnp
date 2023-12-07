@@ -6,7 +6,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import Menu from './Constant/Menu';
 
-export default function Authenticated({ user, header, children, auth }) {
+export default function AuthenticatedLayout({ user, header, children, auth }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const url = window.location.pathname;
     const urlParts = url.split('/');
@@ -63,7 +63,7 @@ export default function Authenticated({ user, header, children, auth }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                                        <Dropdown.Link href={route('admin.profile.edit')}>Profile</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -100,7 +100,7 @@ export default function Authenticated({ user, header, children, auth }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('admin.dashboard')} active={route().current('admin.dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
@@ -112,7 +112,7 @@ export default function Authenticated({ user, header, children, auth }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('admin.profile.edit')}>Profile</ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>

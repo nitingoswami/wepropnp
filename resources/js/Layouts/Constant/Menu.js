@@ -2,30 +2,30 @@ const Menu =  {
     "admin": [
         {
             title: 'Dashboard',
-            route: "dashboard",
-            active: ["dashboard"],
+            route: "admin.dashboard",
+            active: ["admin.dashboard"],
         },
         {
             title: 'Users',
-            route: "user.list",
+            route: "admin.user.list",
             active: [
-                "user.list",
-                "user.create",
-                "user.edit"
+                "admin.user.list",
+                "admin.user.create",
+                "admin.user.edit"
             ],
         },
         {
             title: 'Project',
-            route: "project.list",
+            route: "admin.project.list",
             active: [
-                "project.list",
-                "project.create",
-                "project.detail",
-                "project.edit",
-                "task.create",
-                "task.list",
-                "task.edit",
-                "task.detail",
+                "admin.project.list",
+                "admin.project.create",
+                "admin.project.detail",
+                "admin.project.edit",
+                "admin.task.create",
+                "admin.task.list",
+                "admin.task.edit",
+                "admin.task.detail",
             ],
         },
 
@@ -34,7 +34,11 @@ const Menu =  {
 
     ],
     "project manager":[
-
+        {
+            title: 'Dashboard',
+            route: "projectManager.dashboard",
+            active: ["projectManager.dashboard"],
+        },
     ],
     "junior developer": [
 

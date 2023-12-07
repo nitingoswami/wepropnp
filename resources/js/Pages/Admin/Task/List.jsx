@@ -31,7 +31,7 @@ export default function List({ data, Id, developer }) {
     const { item, setItem, get, post, processing, errors, reset } = useForm();
 
     const handleView = (id) => {
-        get(route("task-detail", { id }));
+        get(route("admin.task-detail", { id }));
     };
 
 
@@ -44,13 +44,13 @@ export default function List({ data, Id, developer }) {
     };
 
     const handleCreate = () => {
-        get(route("task.create", { id: Id }));
+        get(route("admin.task.create", { id: Id }));
     };
 
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
        const handleUpdate = (id) => {
-        get(route("edit-task", { id }));
+        get(route("admin.edit-task", { id }));
     };
 
     const handleChangePage = (event, newPage) => {

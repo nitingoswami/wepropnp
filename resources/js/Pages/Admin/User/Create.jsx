@@ -29,7 +29,7 @@ export default function Create({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("user.save"));
+        post(route("admin.user.save"));
     };
 
     return (

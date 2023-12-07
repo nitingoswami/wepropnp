@@ -6,7 +6,7 @@ import { useForm } from "@inertiajs/react";
 export default function UserDetail({ data }) {
     const { setData, get, processing, errors, setError } = useForm();
     const handleUpdate = (id) => {
-        get(route("user.edit", { id }));
+        get(route("admin.user.edit", { id }));
     };
     return (
         <Box sx={{ backgroundColor: "#f7f7f7" }} className="pb-5">

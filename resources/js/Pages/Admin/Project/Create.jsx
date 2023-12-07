@@ -65,7 +65,7 @@ export default function Create({ auth, developer, manager }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("project.save"));
+        post(route("admin.project.save"));
     };
     return (
         <div>

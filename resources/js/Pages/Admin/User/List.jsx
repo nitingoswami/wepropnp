@@ -28,7 +28,7 @@ export default function List({data, auth }) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
         const handleView =(id) =>{
-        get(route("user.detail", {id}));
+        get(route("admin.user.detail", {id}));
     }
 
     const handleChangePage = (event, newPage) => {
@@ -49,7 +49,7 @@ export default function List({data, auth }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg px-2 py-3">
                         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mb={2}>
                             <div><PeopleIcon/> Users</div>
-                            <Link href={route('user.create')}>
+                            <Link href={route('admin.user.create')}>
                                 <Button className="capitalize" variant="contained" color="primary" size={"small"} startIcon={<AddIcon/>}>
                                     Create
                                 </Button>
@@ -91,7 +91,7 @@ export default function List({data, auth }) {
                                                 </IconButton>
                                                     &emsp;
                                                     <Link
-                                                        href={route('user.edit',{id:item.id})}
+                                                        href={route('admin.user.edit',{id:item.id})}
                                                         method="get"
                                                     >
                                                     <IconButton aria-label="edit" color="primary">

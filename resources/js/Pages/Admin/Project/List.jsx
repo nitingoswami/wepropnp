@@ -32,14 +32,14 @@ export default function List({ data, auth, developer, manager }) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleView = (id) => {
-        get(route("project.detail", { id }));
+        get(route("admin.project.detail", { id }));
     };
 
     const handleCreate = () => {
-        get(route("project.create"));
+        get(route("admin.project.create"));
     };
     const handleUpdate = (id) => {
-        get(route("project.edit", { id }));
+        get(route("admin.project.edit", { id }));
     };
 
     const handleChangePage = (event, newPage) => {
