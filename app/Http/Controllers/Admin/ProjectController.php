@@ -46,7 +46,7 @@ class ProjectController extends Controller
     public function save(ProjectRequest $request)
     {
       $this->projectRepository->save($request->all());
-      return Redirect::route('project.list');
+      return Redirect::route('admin.project.list');
     //  return Redirect::back('project.list');
     }
 
@@ -81,7 +81,7 @@ class ProjectController extends Controller
     {
 
         $this->projectRepository->update($id, $request->all());
-        return Redirect::route('project.list');
+        return Redirect::route('admin.project.list');
         // return  redirect()->back();
     }
 
@@ -93,6 +93,6 @@ class ProjectController extends Controller
     }
 
     public function project(){
-        return Inertia::render('admin/project/ProjectTasks');
+        return Inertia::render('Admin/Project/ProjectTasks');
     }
 }

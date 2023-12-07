@@ -42,7 +42,7 @@ class TaskController extends Controller
 
     public function save (Request $request,$id ){
             $this->taskRepository->save($id,$request->all());
-            return Redirect::route('project.detail',$id);
+            return Redirect::route('admin.project.detail',$id);
 
         }
 
@@ -62,7 +62,7 @@ class TaskController extends Controller
 
 
         $proj_id = $this->taskRepository->update($id ,$request->all());
-        return Redirect::route('project.detail',$proj_id);
+        return Redirect::route('admin.project.detail',$proj_id);
 
 
     }
@@ -72,7 +72,7 @@ class TaskController extends Controller
         $items = $this->taskRepository->detail($id);
         $data = $items[0];
         $user = $items[1];
-        return Inertia::render('admin/task/Details',['data'=>$data , 'developer'=>$user]);
+        return Inertia::render('Admin/Task/Details',['data'=>$data , 'developer'=>$user]);
     }
 
     public function status(Request $request, $id){

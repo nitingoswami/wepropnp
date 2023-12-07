@@ -37,10 +37,10 @@ class UserController extends Controller
         $data = $this->userRepository->save($request);
         $id = $data->id;
         if($data->user_role === 'admin'){
-            return Redirect::route('user.list');
+            return Redirect::route('admin.user.list');
         }
         else{
-            return Redirect::route('user.salary.create' ,['user'=>$id]);
+            return Redirect::route('admin.user.salary.create' ,['user'=>$id]);
         }
     }
 
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function update(Request $request ,$id)
     {
         $this->userRepository->update($id,$request->all());
-        return Redirect::route('user.list');
+        return Redirect::route('admin.user.list');
     }
 
     public function detail($id)

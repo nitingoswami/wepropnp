@@ -148,9 +148,8 @@ export default function Edit({ auth, user }) {
                                 />
                                 <RadioGroup
                                     value={value.user_role}
-                                    onChange={(e) =>
-                                        setValue("user_role", e.target.value)
-                                    }
+                                    onChange={handleChange}
+                                    name="user_role"
                                     row
                                 >
                                     <FormControlLabel
@@ -160,25 +159,25 @@ export default function Edit({ auth, user }) {
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="hr_manager"
+                                        value="hr manager"
                                         control={<Radio />}
                                         label="HR Manager"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="project_manager"
+                                        value="project manager"
                                         control={<Radio />}
                                         label="Project Manager"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="senior_developer"
+                                        value="senior developer"
                                         control={<Radio />}
                                         label="Senior Developer"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="junior_developer"
+                                        value="junior developer"
                                         control={<Radio />}
                                         label="Junior Developer"
                                         aria-setsize={"small"}

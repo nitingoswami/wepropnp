@@ -11,7 +11,9 @@ const Menu =  {
             active: [
                 "admin.user.list",
                 "admin.user.create",
-                "admin.user.edit"
+                "admin.user.edit",
+                "admin.user.detail",
+                "admin.user.history",
             ],
         },
         {
@@ -32,12 +34,25 @@ const Menu =  {
     ],
     "hr manager":[
 
+
     ],
     "project manager":[
         {
             title: 'Dashboard',
             route: "projectManager.dashboard",
             active: ["projectManager.dashboard"],
+        },
+
+        {
+            title: 'Project',
+            route: "projectManager.project.list",
+            active: [
+                "projectManager.project.list",
+                "projectManager.project.create",
+                "projectManager.project.edit",
+                "projectManager.project.detail",
+                "projectManager.project.history",
+            ],
         },
     ],
     "junior developer": [

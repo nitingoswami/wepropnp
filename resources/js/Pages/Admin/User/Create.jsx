@@ -228,25 +228,25 @@ export default function Create({ auth }) {
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="hr_manager"
+                                        value="hr manager"
                                         control={<Radio />}
                                         label="HR Manager"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="project_manager"
+                                        value="project manager"
                                         control={<Radio />}
                                         label="Project Manager"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="senior_developer"
+                                        value="senior developer"
                                         control={<Radio />}
                                         label="Senior Developer"
                                         aria-setsize={"small"}
                                     />
                                     <FormControlLabel
-                                        value="junior_developer"
+                                        value="junior developer"
                                         control={<Radio />}
                                         label="Junior Developer"
                                         aria-setsize={"small"}

@@ -96,6 +96,9 @@ Route::prefix('project-manager')->name('projectManager.')->middleware(['auth', '
     Route::prefix('dashboard')->name('dashboard')->controller(DashboardController::class)->group( function () {
         Route::get('/','index');
     });
+    Route::prefix('project')->name('project.')->controller(DashboardController::class)->group( function () {
+        Route::get('/list','list')->name('list');
+    });
 });
 
 require __DIR__.'/auth.php';
