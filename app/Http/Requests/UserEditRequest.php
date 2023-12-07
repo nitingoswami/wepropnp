@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
-use Illuminate\Validation\Rules;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Models\User;
+use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class UserEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,18 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('id');
         return [
-
-                'name' => ['required','string','max:255'],
-                'email' => ['required','string','lowercase','email','max:255','unique:'.User::class],
-                'user_role' => ['required','string'],
-                'contact_no'=>['required','min:10','max:12'],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'user_role' => ['required', 'string'],
         ];
     }
 }

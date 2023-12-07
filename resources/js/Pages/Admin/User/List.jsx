@@ -20,6 +20,7 @@ import GlobalStyle from "@/Constant/GlobalStyle";
 import PeopleIcon from '@mui/icons-material/People';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
+import Create from "./Create";
 
 export default function List({data, auth }) {
 
@@ -49,11 +50,22 @@ export default function List({data, auth }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg px-2 py-3">
                         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mb={2}>
                             <div><PeopleIcon/> Users</div>
-                            <Link href={route('admin.user.create')}>
+                            {/* <Link href={route('admin.user.create')}>
                                 <Button className="capitalize" variant="contained" color="primary" size={"small"} startIcon={<AddIcon/>}>
                                     Create
                                 </Button>
-                            </Link>
+                            </Link> */}
+                            <div
+                            style={{
+                                margin: "10px",
+                                display: "flex",
+                                justifyContent: "end",
+                            }}
+                        >
+
+                            <Create/>
+
+                        </div>
                         </Box>
                         <TableContainer
                          sx={{ padding:"10px",border:"1px solid whitesmoke" }}>

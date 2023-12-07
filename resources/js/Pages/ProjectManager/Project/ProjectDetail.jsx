@@ -6,12 +6,12 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ProjectDetail from "./ProjectDetail";
-import List from "../Task/List";
-import History from "./History";
+import Details from "@/Components/Common/Project/Admin/Details";
+import List from "@/Components/Common/Project/Task/List";
+import View from "../Task/View";
 
-export default function Detail({ data, auth, user, task }) {
-    console.log(data,'datatattt');
+export default function ProjectDetail({ data, auth, user, task }) {
+    console.log(data,'datttt');
     const [value, setValue] = React.useState("1");
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -36,21 +36,21 @@ export default function Detail({ data, auth, user, task }) {
                     <TabList onChange={handleChange} className="px-3">
                         <Tab label="Details" value="1" style={{ fontWeight:"bold"}}/>
                         <Tab label="Task" value="2" style={{ fontWeight:"bold"}}/>
-                        <Tab label="History" value="3" style={{ fontWeight:"bold"}}/>
                     </TabList>
                     <TabPanel value="1">
-                        <ProjectDetail data={data} user={user} />
+                       <Details data={data} user={user} auth={auth}/>
+
                     </TabPanel>
 
                     <TabPanel value="2">
-                        <List data={task} Id={id} developer={user} />
+                        {/* <List data={task} Id={id} developer={user} /> */}
+                        <View data={task} Id={id} developer={user} />
                     </TabPanel>
 
-                    <TabPanel value="3">
-                        <History data={data}/>
-                    </TabPanel>
                 </TabContext>
             </Box>
         </AuthenticatedLayout>
     );
 }
+
+

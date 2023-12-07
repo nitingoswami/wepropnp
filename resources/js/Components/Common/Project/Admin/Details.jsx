@@ -10,7 +10,7 @@ import {
     Chip,
 } from "@mui/material";
 
-export default function ProjectDetail({ user, data, auth }) {
+export default function Details({ user, data, auth }) {
     const { setData, get, processing, errors, setError } = useForm();
     console.log(user,'datatt');
 
@@ -37,14 +37,16 @@ export default function ProjectDetail({ user, data, auth }) {
                         >
                             Basic Project Information
                         </Typography>
-                        <Button
-                            sx={{ display: "flex", justifyContent: "end" }}
-                            onClick={() => handleUpdate(data.id)}
-                        >
-                            <IconButton aria-label="edit" color="primary">
+
+                            {
+                                auth.user.user_role =="admin" &&
+                                <IconButton aria-label="edit" color="primary"
+                                sx={{ display: "flex", justifyContent: "end" }}
+                                onClick={() => handleUpdate(data.id)}>
                                 <EditIcon />
-                            </IconButton>
-                        </Button>
+                               </IconButton>
+                            }
+
                     </Grid>
                 </Grid>
                 <br />

@@ -13,13 +13,12 @@ class TaskRepository implements TaskInterface
 
     public function getlist($id)
     {
-        $url = url()->current();
         $data = Task::where('project_id',$id)->get();
 
-        $task_id = Task::where('project_id',$id)->pluck('id'); // all task id that related to a related project
+        $task_id = Task::where('project_id',$id)->pluck('id');
         $dev_id = Developer::whereIn('assignable_id',$task_id)->where('assignable_type','App\Models\Task')->pluck('developer_id');
         $developer = explode(',',$dev_id);
-        $developer = str_replace(array('[', ']', '"'),'',$developer);  // remove "[ " " ]" from collection
+        $developer = str_replace(array('[', ']', '"'),'',$developer);
         $dev = array_map('intval', $developer);
         $developers = User::whereIn('id',$dev)->select('id','name','email','contact_no','user_role')->get();
 

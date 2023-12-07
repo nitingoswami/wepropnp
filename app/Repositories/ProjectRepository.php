@@ -7,15 +7,31 @@ use App\Models\Project;
 use App\Models\Developer;
 use App\Models\User;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProjectRepository implements ProjectInterface
 {
     public function getlist()
     {
-        $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
-        $manager = User::where('user_role','project manager')->get();
-        $data = Project::all();
-        return [$data , $developer ,$manager];
+        $user = Auth::user();
+        $role = $user->user_role;
+
+        if($role == "admin"){
+            $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
+            $manager = User::where('user_role','project manager')->get();
+            $data = Project::all();
+            return [$data , $developer ,$manager];
+        }
+
+        else if($role ="project manager"){
+            $project = Project::where('project_manager',$user->name)->get();
+            $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
+            $manager = User::where('user_role','project manager')->get();
+            return [$project , $developer , $manager];
+        }
+
+
     }
 
     public function save($req)
@@ -95,7 +111,10 @@ class ProjectRepository implements ProjectInterface
 
     public function detail($id)
     {
-        try {
+        $user = Auth::user();
+        $role = $user->user_role;
+
+        if($role == "admin"){
             $data = Project::findOrFail($id);
             $dev_id = Developer::where(['assignable_id'=>$data->id , 'assignable_type'=> 'App\Models\Project'])->pluck('developer_id');
             $developer = explode(',',$dev_id);
@@ -103,16 +122,23 @@ class ProjectRepository implements ProjectInterface
             $dev = array_map('intval', $developer);
             $user = User::whereIn('id', $dev)->get();
             $task = Task::where(['project_id'=>$id])->get();
-
            return [
-            'success'=>true ,
+
             $data , $user , $task
            ];
-        } catch (\Throwable $th) {
-            return [
-                'success'=>false,
-                'message' => $th->getMessage(),
-            ];
+        }
+        else if($role == "project manager")
+        {
+            $data = Project::findOrFail($id);
+            $dev_id = Developer::where(['assignable_id'=>$data->id , 'assignable_type'=> 'App\Models\Project'])->pluck('developer_id');
+            $developer = explode(',',$dev_id);
+            $developer = str_replace(array('[', ']', '"'),'',$developer);
+            $dev = array_map('intval', $developer);
+            $user = User::whereIn('id', $dev)->get();
+            $task = Task::where(['project_id'=>$id])->get();
+           return [
+            $data , $user , $task
+           ];
         }
     }
 }

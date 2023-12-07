@@ -14,7 +14,7 @@ export default function Popover({ id }) {
     const [open, setOpen] = React.useState(false);
     const { data, setData, post, processing, errors, setError } = useForm();
     const handleDelete = (id) => {
-        post(route("user.delete", { id }));
+        post(route("admin.user.delete", { id }));
         handleClose();
     };
     const handleClick = () => {

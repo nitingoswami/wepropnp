@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Inertia\Inertia;
 use App\Http\Controllers\ProjectManager\DashboardController;
+use App\Http\Controllers\ProjectManager\ManagerProjectController;
+use App\Http\Controllers\HRManager\HrDashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -96,10 +99,22 @@ Route::prefix('project-manager')->name('projectManager.')->middleware(['auth', '
     Route::prefix('dashboard')->name('dashboard')->controller(DashboardController::class)->group( function () {
         Route::get('/','index');
     });
-    Route::prefix('project')->name('project.')->controller(DashboardController::class)->group( function () {
+    Route::prefix('project')->name('project.')->controller(ManagerProjectController::class)->group( function () {
         Route::get('/list','list')->name('list');
+        Route::get('/detail/{id}','detail')->name('detail');
     });
 });
+
+Route::prefix('hr-manager')->name('hrManager.')->middleware(['auth', 'role:hr manager'])->group(function () {
+    Route::prefix('dashboard')->name('dashboard')->controller(HrDashboardController::class)->group( function () {
+        Route::get('/','index');
+    });
+    Route::prefix('user')->name('user.')->controller(UserController::class)->group( function () {
+        Route::get('list','list')->name('list');
+    });
+});
+
+
 
 require __DIR__.'/auth.php';
 

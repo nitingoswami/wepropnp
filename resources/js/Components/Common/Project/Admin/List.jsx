@@ -22,8 +22,8 @@ import FormatDate from "@/Util/FormatDate";
 import DateTimeFormat from "@/Util/DateTimeFormat";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import Create from "./Create";
-import Detail from "./Detail";
+// import Create from "./Create";
+// import Detail from "./Detail";
 
 export default function List({ data, auth, developer, manager }) {
 
@@ -32,7 +32,12 @@ export default function List({ data, auth, developer, manager }) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleView = (id) => {
+       if(auth.user.user_role=="admin"){
         get(route("admin.project.detail", { id }));
+       }
+       else if(auth.user.user_role=="project manager"){
+        get(route('projectManager.project.detail', { id }));
+       }
     };
 
     const handleCreate = () => {
@@ -61,10 +66,14 @@ export default function List({ data, auth, developer, manager }) {
                     justifyContent: "end",
                 }}
             >
-                <Create
+                {
+                    auth.user.user_role=="admin" &&
+                    <Create
                     developer={developer}
                     manager={manager}
                 />
+                }
+
             </div>
         </Box>
 
@@ -158,7 +167,9 @@ export default function List({ data, auth, developer, manager }) {
                                             aria-label="edit"
                                             color="primary"
                                         >
-                                            <EditIcon
+                                            {
+                                                auth.user.user_role=="admin" &&
+                                                <EditIcon
                                                 color="info"
                                                 onClick={() =>
                                                     handleUpdate(
@@ -166,6 +177,8 @@ export default function List({ data, auth, developer, manager }) {
                                                     )
                                                 }
                                             />
+                                            }
+
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>

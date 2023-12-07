@@ -1,10 +1,15 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { useEffect } from "react";
+import * as React from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import AddIcon from "@mui/icons-material/Add";
 import { Head, Link, useForm } from "@inertiajs/react";
 import {
     Button,
@@ -17,7 +22,23 @@ import {
     Typography,
 } from "@mui/material";
 
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+};
+
 export default function Create({ auth }) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     const { data, setData, get, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
@@ -27,24 +48,37 @@ export default function Create({ auth }) {
         salary: "",
     });
 
+
     const submit = (e) => {
         e.preventDefault();
         post(route("admin.user.save"));
+        setOpen(false);
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
-            <div className="mt-5 flex flex-col sm:justify-center items-center sm:pt-0 bg-gray-100">
-                <Head title="Create User" />
-
-                <div
-                    className="w-full  mt-0 px-3 py-2 shadow-md bg-white overflow-hidden sm:rounded-lg"
-                    style={{
-                        width: "60%",
-                        alignContent: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
+        <div>
+        <Button
+            variant="contained"
+            onClick={handleOpen}
+            startIcon={<AddIcon />}
+        >
+            Create
+        </Button>
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+                backdrop: {
+                    timeout: 500,
+                },
+            }}
+        >
+            <Fade in={open}>
+                <Box sx={style} style={{ width: "800px" }}>
                     <form onSubmit={submit}>
                         <div
                             style={{
@@ -314,8 +348,9 @@ export default function Create({ auth }) {
                             </>
                         )}
                     </form>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+                </Box>
+                </Fade>
+            </Modal>
+        </div>
     );
 }

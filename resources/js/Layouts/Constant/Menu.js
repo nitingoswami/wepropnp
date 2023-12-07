@@ -24,16 +24,39 @@ const Menu =  {
                 "admin.project.create",
                 "admin.project.detail",
                 "admin.project.edit",
-                "admin.task.create",
-                "admin.task.list",
-                "admin.task.edit",
-                "admin.task.detail",
+                "admin.project.task.create",
+                "admin.project.task.list",
+                "admin.project.task.edit",
+                "admin.project.task.detail",
             ],
         },
 
     ],
     "hr manager":[
-
+        {
+            title: 'Dashboard',
+            route: "hrManager.dashboard",
+            active: ["hrManager.dashboard"],
+        },
+        {
+            title: 'Users',
+            route: "hrManager.user.list",
+            active: [
+                "hrManager.user.list",
+                "hrManager.user.create",
+                "hrManager.user.edit",
+                "hrManager.user.detail",
+                "hrManager.user.history",
+            ],
+        },
+        // {
+        //     title: 'Project',
+        //     route: "hrManager.project.list",
+        //     active: [
+        //         "hrManager.project.list",
+        //         "hrManager.project.task.list",
+        //     ]
+        // },
 
     ],
     "project manager":[
@@ -48,10 +71,10 @@ const Menu =  {
             route: "projectManager.project.list",
             active: [
                 "projectManager.project.list",
-                "projectManager.project.create",
-                "projectManager.project.edit",
-                "projectManager.project.detail",
-                "projectManager.project.history",
+                // "projectManager.project.create",
+                // "projectManager.project.edit",
+                // "projectManager.project.detail",
+                // "projectManager.project.history",
             ],
         },
     ],
