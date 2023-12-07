@@ -1,5 +1,5 @@
 import { Head, router, useForm } from "@inertiajs/react";
-import { IconButton, MenuItem, Select, Typography } from "@mui/material";
+import { Button, Grid, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
@@ -39,26 +39,35 @@ export default function Edit({ data, developer, devId }) {
         start_date: data.start_date,
         priority: data.priority,
         developer: [],
-        level : data.level,
+        level: data.level,
         status: data.status,
     });
 
     const handleChange = (e) => {
         setItem({ ...item, [e.target.name]: e.target.value });
     };
-    const handleDeveloperSelect = (e) => {
-        setItem({ ...item, developer: e.target.value });
+    // const handleDeveloperSelect = (e) => {
+    //     setItem({ ...item, developer: e.target.value });
+    // };
+
+    const handleDeveloper = (id) => {
+        setItem((prev) => ({
+            ...prev,
+            developer: prev.developer.includes(id)
+                ? prev.developer.filter((value) => value !== id)
+                : [...prev.developer, id],
+        }));
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route("project.task.update", { id: data.id }),item);
+        router.post(route("project.task.update", { id: data.id }), item);
         setOpen(false);
-
     };
 
     return (
         <>
-            <IconButton aria-label='edit' color='primary'>
+            <IconButton aria-label="edit" color="primary">
                 <EditIcon color="info" onClick={handleOpen} />
             </IconButton>
             <Modal
@@ -151,13 +160,13 @@ export default function Edit({ data, developer, devId }) {
                             <div className="mt-4">
                                 <InputLabel
                                     htmlFor="developer"
-                                    value="Select Developer"
+                                    value="Assign To"
                                     style={{
                                         fontSize: "15px",
                                         fontWeight: "bold",
                                     }}
                                 />
-                                <Select
+                                {/* <Select
                                     multiple
                                     value={item.developer}
                                     onChange={handleDeveloperSelect}
@@ -174,7 +183,30 @@ export default function Edit({ data, developer, devId }) {
                                             )
                                         </MenuItem>
                                     ))}
-                                </Select>
+                                </Select> */}
+                                <Grid item xs={12}>
+                                    {developer.map((dev, index) => (
+                                        <Button
+                                            key={index}
+                                            variant={
+                                                item.developer.includes(dev.id)
+                                                    ? "contained"
+                                                    : "outlined"
+                                            }
+                                            size="small"
+                                            onClick={() =>
+                                                handleDeveloper(dev?.id)
+                                            }
+                                            style={{ margin: "2px" }}
+                                        >
+                                            {dev.name} (
+                                            {dev.user_role == "senior developer"
+                                                ? "Senior"
+                                                : "Junior"}
+                                            )
+                                        </Button>
+                                    ))}
+                                </Grid>
                                 <InputError
                                     message={errors.developer}
                                     className="mt-2"
@@ -209,41 +241,39 @@ export default function Edit({ data, developer, devId }) {
                             </div>
 
                             <div className="mt-4">
-                                    <InputLabel
-                                        htmlFor="status"
-                                        value="Status"
-                                        style={{
-                                            fontSize: "15px",
-                                            fontWeight: "bold",
-                                        }}
-                                    />
-                                    <Select
-                                        value={item.status}
-                                        name="status"
-                                        style={{
-                                            height: "42px",
-                                        }}
-                                        className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
-                                        onChange={handleChange}
-                                        required
-                                    >
-                                        <MenuItem>Choose Status</MenuItem>
-                                        <MenuItem value={"new"}>New</MenuItem>
-                                        <MenuItem value={"started"}>
-                                            Started
-                                        </MenuItem>
-                                        <MenuItem value={"complete"}>
-                                            Complete
-                                        </MenuItem>
-                                        <MenuItem value={"pause"}>
-                                            Pause
-                                        </MenuItem>
-                                    </Select>
-                                    <InputError
-                                        message={errors.status}
-                                        className="mt-2"
-                                    />
-                                </div>
+                                <InputLabel
+                                    htmlFor="status"
+                                    value="Status"
+                                    style={{
+                                        fontSize: "15px",
+                                        fontWeight: "bold",
+                                    }}
+                                />
+                                <Select
+                                    value={item.status}
+                                    name="status"
+                                    style={{
+                                        height: "42px",
+                                    }}
+                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <MenuItem>Choose Status</MenuItem>
+                                    <MenuItem value={"new"}>New</MenuItem>
+                                    <MenuItem value={"started"}>
+                                        Started
+                                    </MenuItem>
+                                    <MenuItem value={"complete"}>
+                                        Complete
+                                    </MenuItem>
+                                    <MenuItem value={"pause"}>Pause</MenuItem>
+                                </Select>
+                                <InputError
+                                    message={errors.status}
+                                    className="mt-2"
+                                />
+                            </div>
 
                             <div
                                 style={{
@@ -326,7 +356,6 @@ export default function Edit({ data, developer, devId }) {
                                     />
                                 </div>
                             </div>
-                           
 
                             <div className="flex items-center justify-center m-8">
                                 <PrimaryButton

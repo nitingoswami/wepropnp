@@ -82,7 +82,7 @@ class TaskRepository implements TaskInterface
         $task->priority =$data['priority'];
         $task->status =$data['status'];
         $task->level = $data['level'];
-      
+
         $task->save();
         $task->update(['developer_id'=>$dev_id]);
 

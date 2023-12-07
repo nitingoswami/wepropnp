@@ -29,12 +29,5 @@ class ProjectRequest extends FormRequest
             'developer' => ['required'],
         ];
     }
-//     $request->validate([
-//         'title'=>'required|string',
-//         'description'=>'required|string',
-//         'start_date' => 'required',
-//         'end_date' => 'required',
-//         'project_manager' => 'required',
-//         'developer' => 'required',
-//     ]);
+
 }

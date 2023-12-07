@@ -12,7 +12,7 @@ import History from "./History";
 
 export default function Detail({ data, auth, user, task }) {
     const [value, setValue] = React.useState("1");
-
+console.log(task,'uuuu');
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };

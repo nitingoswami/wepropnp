@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->datetime('start_date');
-            $table->datetime('end_date');
             $table->string('project_manager');
             $table->timestamps();
         });

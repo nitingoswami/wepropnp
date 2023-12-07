@@ -25,20 +25,18 @@ class ProjectRepository implements ProjectInterface
             'title' => $req['title'],
             'description' => $req['description'],
             'start_date' => $req['start_date'],
-            'end_date' => $req['end_date'],
             'project_manager' => $req['project_manager'],
         ]);
+
         $project_id = $data->id;
         $project = Project::find($project_id);
                 $project = $project->developer()->create([  'project_id' => $project_id,
                 'developer_id' => implode(',', $req['developer']),
                 ]);
-
-
         return [
             'success' => true,
             'message' => "Project Created Successfully ."
-        ]; 
+        ];
        } catch (\Throwable $th) {
         return [
             'success' => false ,
@@ -105,7 +103,7 @@ class ProjectRepository implements ProjectInterface
             $dev = array_map('intval', $developer);
             $user = User::whereIn('id', $dev)->get();
             $task = Task::where(['project_id'=>$id])->get();
-    
+
            return [
             'success'=>true ,
             $data , $user , $task

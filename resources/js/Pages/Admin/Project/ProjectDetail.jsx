@@ -19,6 +19,7 @@ import {
 
 export default function ProjectDetail({ user, data, auth }) {
     const { setData, get, processing, errors, setError } = useForm();
+    console.log(user,'datatt');
 
     const handleUpdate = (id) => {
         get(route("project.edit", { id }));
@@ -107,7 +108,7 @@ export default function ProjectDetail({ user, data, auth }) {
             </Box>
             <br/>
 
-            
+
             <Box sx={{ backgroundColor: "#f7f7f7" }} className="pb-5">
                 <Grid container>
                     <Grid
@@ -189,15 +190,15 @@ export default function ProjectDetail({ user, data, auth }) {
                 </Grid> */}
                 <Box>
                     {
-                        user.map((item, j) => 
+                        user.map((item, j) =>
                         {
                            return (
                             <Chip label={item.name} className="capitalize" sx={{ margin:"10px"}}
                              color={item.user_role == "senior_developer" ? "primary" : "secondary"}/>
 
                            );
-                            
-                          
+
+
                         })
                     }
                 </Box>

@@ -4,14 +4,20 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, router, useForm } from "@inertiajs/react";
-import { Button, Chip, MenuItem, Select, Typography } from "@mui/material";
+import {
+    Button,
+    Chip,
+    Grid,
+    MenuItem,
+    Select,
+    Typography,
+} from "@mui/material";
 import InputError from "@/Components/InputError";
 
 export default function Edit({ data, auth, developer, manager, devId }) {
-
     const [selectedDevelopers, setSelectedDevelopers] = useState([]);
     const { post, processing, errors, reset } = useForm();
-    console.log(developer ,'developer');
+    console.log(developer, "developer");
 
     const [item, setItem] = useState({
         title: data.title,
@@ -31,8 +37,17 @@ export default function Edit({ data, auth, developer, manager, devId }) {
         });
     };
 
-    const handleSelect = (event) => {
-        setItem({ ...item, developer: event.target.value });
+    // const handleSelect = (event) => {
+    //     setItem({ ...item, developer: event.target.value });
+    // };
+
+    const handleDeveloper = (id) => {
+        setItem((prev) => ({
+            ...prev,
+            developer: prev.developer.includes(id)
+                ? prev.developer.filter((value) => value !== id)
+                : [...prev.developer, id],
+        }));
     };
 
     const handleSubmit = (e) => {
@@ -82,10 +97,10 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                 onChange={(e) => handleChange(e)}
                                 required
                             />
-                              <InputError
-                                    message={errors.title}
-                                    className="mt-2"
-                                />
+                            <InputError
+                                message={errors.title}
+                                className="mt-2"
+                            />
                         </div>
 
                         <div className="mt-4">
@@ -105,15 +120,15 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                 onChange={(e) => handleChange(e)}
                                 required
                             />
-                               <InputError
-                                    message={errors.description}
-                                    className="mt-2"
-                                />
+                            <InputError
+                                message={errors.description}
+                                className="mt-2"
+                            />
                         </div>
 
                         <div className="mt-4">
                             <InputLabel
-                                htmlFor="developer"
+                                htmlFor="Manager"
                                 value="Select Manager"
                             />
                             <select
@@ -132,64 +147,34 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                 })}
                             </select>
                             <InputError
-                                    message={errors.project_manager}
-                                    className="mt-2"
-                                />
+                                message={errors.project_manager}
+                                className="mt-2"
+                            />
                         </div>
-
 
                         <div className="mt-4">
                             <InputLabel
-                                htmlFor="developer"
-                                value="Select Developer"
+                                htmlFor="start_date"
+                                value="Start Date"
                             />
 
-                            <Select
-                                multiple
-                                value={item.developer}
-                                onChange={handleSelect}
-                                style={{ height: "43px" }}
-                                className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                            >
-                                <MenuItem>Select Developer</MenuItem>
-                                {developer.map((dev) => (
-                                    <MenuItem key={dev.name} value={dev.id} >
-                                        {dev.name} ({dev.user_role=="senior developer"? "Senior" : "Junior"})
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                            <TextInput
+                                id="start_date"
+                                type="date"
+                                name="start_date"
+                                value={item.start_date}
+                                className="mt-1 block w-full"
+                                autoComplete="start_date"
+                                onChange={(e) => handleChange(e)}
+                                required
+                            />
                             <InputError
-                                    message={errors.developer}
-                                    className="mt-2"
-                                />
-
+                                message={errors.start_date}
+                                className="mt-2"
+                            />
                         </div>
 
-
-                        
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="start_date"
-                                    value="Start Date"
-                                />
-
-                                <TextInput
-                                    id="start_date"
-                                    type="date"
-                                    name="start_date"
-                                    value={item.start_date}
-                                    className="mt-1 block w-full"
-                                    autoComplete="start_date"
-                                    onChange={(e) => handleChange(e)}
-                                    required
-                                />
-                                 <InputError
-                                    message={errors.start_date}
-                                    className="mt-2"
-                                />
-                            </div>
-
-                            {/* <div className="mt-4">
+                        {/* <div className="mt-4">
                                 <InputLabel
                                     htmlFor="end_date"
                                     value="End Date"
@@ -215,17 +200,62 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                                     className="mt-2"
                                 />
                             </div> */}
+                        <div className="mt-4">
+                            <InputLabel htmlFor="developer" value="Assign To" />
+
+                            {/* <Select
+                                multiple
+                                value={item.developer}
+                                onChange={handleSelect}
+                                style={{ height: "43px" }}
+                                className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                            >
+                                <MenuItem>Select Developer</MenuItem>
+                                {developer.map((dev) => (
+                                    <MenuItem key={dev.name} value={dev.id} >
+                                        {dev.name} ({dev.user_role=="senior developer"? "Senior" : "Junior"})
+                                    </MenuItem>
+                                ))}
+                            </Select> */}
+                            <Grid item xs={12}>
+                                {developer.map((dev, index) => (
+                                    <Button
+                                        key={index}
+                                        variant={
+                                            item.developer.includes(dev.id)
+                                                ? "contained"
+                                                : "outlined"
+                                        }
+                                        size="small"
+                                        onClick={() => handleDeveloper(dev?.id)}
+                                        style={{ margin: "2px" }}
+                                    >
+                                        {dev.name} (
+                                        {dev.user_role == "senior developer"
+                                            ? "Senior"
+                                            : "Junior"}
+                                        )
+                                    </Button>
+                                ))}
+                            </Grid>
+                            <InputError
+                                message={errors.developer}
+                                className="mt-2"
+                            />
+                        </div>
 
                         <div className="flex items-center justify-center m-8">
-
                             <PrimaryButton
-                                    className="ms-4"
-                                    variant="contained"
-                                    disabled={processing}
-                                    style={{ height:"40px" ,backgroundColor:'#1976d2'}}
-                                >
-                                    Update Project
-                                </PrimaryButton>
+                                className="ms-4"
+                                variant="contained"
+                                disabled={processing}
+                                style={{
+                                    height: "40px",
+                                    backgroundColor: "#1976d2",
+                                }}
+                            >
+                                Update Project
+                            </PrimaryButton>
                         </div>
                     </form>
                 </div>

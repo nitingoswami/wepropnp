@@ -10,7 +10,7 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { MenuItem, Select } from "@mui/material";
+import { Alert, Grid, MenuItem, Select } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 const style = {
@@ -38,15 +38,25 @@ export default function Create({ developer, Id }) {
         developer: [],
         level: "",
     });
-    const handleDeveloperSelect = (e) => {
-        setData({ ...data, developer: e.target.value });
+    // const handleDeveloperSelect = (e) => {
+    //     setData({ ...data, developer: e.target.value });
+    // };
+
+    const handleDeveloper = (id) => {
+        setData((prev) => ({
+            ...prev,
+            developer: prev.developer.includes(id)
+                ? prev.developer.filter((value) => value !== id)
+                : [...prev.developer, id],
+        }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route("project.task.save", { id: Id }));
+
         setOpen(false);
-        reset;
+
     };
 
     return (
@@ -144,48 +154,6 @@ export default function Create({ developer, Id }) {
 
                                 <InputError
                                     message={errors.description}
-                                    className="mt-2"
-                                />
-                            </div>
-
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="developer"
-                                    value="Assign To"
-                                    style={{
-                                        fontSize: "15px",
-                                        fontWeight: "bold",
-                                    }}
-                                />
-                                <Select
-                                    multiple
-                                    value={data.developer}
-                                    style={{ height: "42px" }}
-                                    onChange={handleDeveloperSelect}
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                >
-                                    {developer.map(
-                                        (dev, index) => (
-                                            console.log(dev, "devvvvvv"),
-                                            (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={dev.id}
-                                                    label={dev.name}
-                                                >
-                                                    {dev.name} (
-                                                    {dev.user_role ==
-                                                    "senior_developer"
-                                                        ? "Senior"
-                                                        : "Junior"}
-                                                    )
-                                                </MenuItem>
-                                            )
-                                        )
-                                    )}
-                                </Select>
-                                <InputError
-                                    message={errors.developer}
                                     className="mt-2"
                                 />
                             </div>
@@ -310,6 +278,79 @@ export default function Create({ developer, Id }) {
                                     />
                                 </div>
                             </div>
+
+                            <div className="mt-4">
+                                <InputLabel
+                                    htmlFor="developer"
+                                    value="Assign To"
+                                    style={{
+                                        fontSize: "15px",
+                                        fontWeight: "bold",
+                                    }}
+                                />
+                                {/* <Select
+                                    multiple
+                                    value={data.developer}
+                                    style={{ height: "42px" }}
+                                    onChange={handleDeveloperSelect}
+                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                >
+                                    {developer.map(
+                                        (dev, index) => (
+                                            console.log(dev, "devvvvvv"),
+                                            (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={dev.id}
+                                                    label={dev.name}
+                                                >
+                                                    {dev.name} (
+                                                    {dev.user_role ==
+                                                    "senior_developer"
+                                                        ? "Senior"
+                                                        : "Junior"}
+                                                    )
+                                                </MenuItem>
+                                            )
+                                        )
+                                    )}
+                                </Select> */}
+                                <Grid item xs={12}>
+                                    {developer.length == 0 ? (
+                                        <Alert severity="info">
+                                            Don't Have Any Developer
+                                        </Alert>
+                                    ) : (
+                                        developer.map((dev, index) => (
+                                            <Button
+                                                key={index}
+                                                variant={
+                                                    data.developer.includes(dev.id)
+                                                        ? "contained"
+                                                        : "outlined"
+                                                }
+                                                size="small"
+                                                onClick={() =>
+                                                    handleDeveloper(dev?.id)
+                                                }
+                                                style={{ margin: "2px" }}
+                                            >
+                                                {dev.name} (
+                                                {dev.user_role ==
+                                                "senior developer"
+                                                    ? "Senior"
+                                                    : "Junior"}
+                                                )
+                                            </Button>
+                                        ))
+                                    )}
+                                </Grid>
+                                <InputError
+                                    message={errors.developer}
+                                    className="mt-2"
+                                />
+                            </div>
+
 
                             <div className="flex items-center justify-center m-8">
                                 <PrimaryButton

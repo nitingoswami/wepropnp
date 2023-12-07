@@ -31,7 +31,7 @@ class ProjectController extends Controller
         $data = $items[0];
         $developer = $items[1];
         $manager = $items[2];
-        return Inertia::render('Admin/Project/List', 
+        return Inertia::render('Admin/Project/List',
         ['data' => $data , 'developer'=>$developer , 'manager'=>$manager]);
     }
 
@@ -47,6 +47,7 @@ class ProjectController extends Controller
     {
       $this->projectRepository->save($request->all());
       return Redirect::route('project.list');
+    //  return Redirect::back('project.list');
     }
 
 
@@ -68,8 +69,8 @@ class ProjectController extends Controller
         $devUsers = $items[1];
         $manager = $items[2];
         $developer = $items[3];
-        return Inertia::render('Admin/Project/Edit', 
-        ['data' => $data, 'developer' => $devUsers, 
+        return Inertia::render('Admin/Project/Edit',
+        ['data' => $data, 'developer' => $devUsers,
         'manager' => $manager, 'devId' => $developer]);
     }
 
