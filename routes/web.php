@@ -13,6 +13,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use Inertia\Inertia;
 use App\Http\Controllers\ProjectManager\DashboardController;
 use App\Http\Controllers\ProjectManager\ManagerProjectController;
+use App\Http\Controllers\ProjectManager\ManagerTaskController;
+
 use App\Http\Controllers\HRManager\HrDashboardController;
 
 
@@ -102,7 +104,16 @@ Route::prefix('project-manager')->name('projectManager.')->middleware(['auth', '
     Route::prefix('project')->name('project.')->controller(ManagerProjectController::class)->group( function () {
         Route::get('/list','list')->name('list');
         Route::get('/detail/{id}','detail')->name('detail');
+
+
+        Route::prefix('/task')->name('task.')->controller(ManagerTaskController::class)->group( function () {
+            Route::post('/save/{id}','save')->name('save');
+            Route::post('/update/{id}','update')->name('update');
+            Route::post('/status/{id}','status')->name('status');
+        });
     });
+
+
 });
 
 Route::prefix('hr-manager')->name('hrManager.')->middleware(['auth', 'role:hr manager'])->group(function () {

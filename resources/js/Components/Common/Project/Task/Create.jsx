@@ -24,7 +24,8 @@ const style = {
     p: 4,
 };
 
-export default function Create({ developer, Id }) {
+export default function Create({ developer, Id ,auth }) {
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -50,7 +51,14 @@ export default function Create({ developer, Id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("admin.project.task.save", { id: Id }));
+        // if(auth.user.user_role="admin"){
+        //     console.log("helllo");
+        //     post(route("admin.project.task.save", { id: Id }));
+        // }
+        // else if(auth.user.user_role=="project manager"){
+        //     console.log("project manager");
+            post(route("projectManager.project.task.save", { id: Id }));
+        // }
 
         setOpen(false);
 

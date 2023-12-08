@@ -35,4 +35,6 @@ class ManagerProjectController extends Controller
         // return Inertia::render('ProjectManager/Project/ProjectDetail');
         return Inertia::render('ProjectManager/Project/ProjectDetail', ['data' => $data, 'user' => $user,'task'=>$task ]);
     }
+
+
 }

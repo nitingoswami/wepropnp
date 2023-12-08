@@ -1,17 +1,16 @@
+import { Head, router, useForm } from "@inertiajs/react";
+import { Button, Grid, IconButton, MenuItem, Select, Typography } from "@mui/material";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { Alert, Grid, MenuItem, Select } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 
 const style = {
     position: "absolute",
@@ -24,23 +23,35 @@ const style = {
     p: 4,
 };
 
-export default function Create({ developer, Id }) {
+export default function Edit({ data, developer, devId ,auth }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const priority = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const level = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const { data, setData, post, processing, errors, reset } = useForm({
-        task_name: "",
-        description: "",
-        start_date: "",
-        priority: "",
+    const { post, get, processing, errors, reset } = useForm();
+
+    const result = Object.keys(developer).map((key) => developer[key]);
+
+    const [item, setItem] = useState({
+        task_name: data.task_name,
+        description: data.description,
+        start_date: data.start_date,
+        priority: data.priority,
         developer: [],
-        level: "",
+        level: data.level,
+        status: data.status,
     });
 
+    const handleChange = (e) => {
+        setItem({ ...item, [e.target.name]: e.target.value });
+    };
+    // const handleDeveloperSelect = (e) => {
+    //     setItem({ ...item, developer: e.target.value });
+    // };
+
     const handleDeveloper = (id) => {
-        setData((prev) => ({
+        setItem((prev) => ({
             ...prev,
             developer: prev.developer.includes(id)
                 ? prev.developer.filter((value) => value !== id)
@@ -50,21 +61,15 @@ export default function Create({ developer, Id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("admin.project.task.save", { id: Id }));
-
+        router.post(route("projectManager.project.task.update", { id: data.id }), item);
         setOpen(false);
-
     };
 
     return (
-        <div>
-            <Button
-                variant="contained"
-                onClick={handleOpen}
-                startIcon={<AddIcon />}
-            >
-                Create
-            </Button>
+        <>
+            <IconButton aria-label="edit" color="primary">
+                <EditIcon color="info" onClick={handleOpen} />
+            </IconButton>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -77,6 +82,7 @@ export default function Create({ developer, Id }) {
                         timeout: 500,
                     },
                 }}
+                style={{ width: "" }}
             >
                 <Fade in={open}>
                     <Box sx={style} style={{ width: "800px" }}>
@@ -93,7 +99,7 @@ export default function Create({ developer, Id }) {
                                     variant="h5"
                                     style={{ fontWeight: "bold" }}
                                 >
-                                    Create Task
+                                    Edit Task
                                 </Typography>
                             </div>
                             <div style={{ marginTop: "10px" }}>
@@ -109,13 +115,11 @@ export default function Create({ developer, Id }) {
                                 <TextInput
                                     id="task_name"
                                     name="task_name"
-                                    value={data.task_name}
+                                    value={item.task_name}
                                     className="mt-1 block w-full"
                                     autoComplete="task_name"
-                                    isFocused={true}
-                                    onChange={(e) =>
-                                        setData("task_name", e.target.value)
-                                    }
+                                    // isFocused={true}
+                                    onChange={handleChange}
                                     required
                                 />
 
@@ -140,12 +144,10 @@ export default function Create({ developer, Id }) {
                                     type="text"
                                     name="description"
                                     rows={3}
-                                    value={data.description}
+                                    value={item.description}
                                     className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                     autoComplete="description"
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
+                                    onChange={handleChange}
                                     required
                                 />
 
@@ -169,17 +171,50 @@ export default function Create({ developer, Id }) {
                                     id="start_date"
                                     type="datetime-local"
                                     name="start_date"
-                                    value={data.start_date}
+                                    value={item.start_date}
                                     className="mt-1 block w-full"
                                     autoComplete="start_date"
-                                    onChange={(e) =>
-                                        setData("start_date", e.target.value)
-                                    }
+                                    onChange={handleChange}
                                     required
                                 />
 
                                 <InputError
                                     message={errors.start_date}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="mt-4">
+                                <InputLabel
+                                    htmlFor="status"
+                                    value="Status"
+                                    style={{
+                                        fontSize: "15px",
+                                        fontWeight: "bold",
+                                    }}
+                                />
+                                <Select
+                                    value={item.status}
+                                    name="status"
+                                    style={{
+                                        height: "42px",
+                                    }}
+                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <MenuItem>Choose Status</MenuItem>
+                                    <MenuItem value={"new"}>New</MenuItem>
+                                    <MenuItem value={"started"}>
+                                        Started
+                                    </MenuItem>
+                                    <MenuItem value={"complete"}>
+                                        Complete
+                                    </MenuItem>
+                                    <MenuItem value={"pause"}>Pause</MenuItem>
+                                </Select>
+                                <InputError
+                                    message={errors.status}
                                     className="mt-2"
                                 />
                             </div>
@@ -200,22 +235,16 @@ export default function Create({ developer, Id }) {
                                         }}
                                     />
                                     <Select
-                                        value={data.priority}
+                                        value={item.priority}
                                         name="priority"
                                         style={{
                                             height: "42px",
                                             width: "352px",
                                         }}
-                                        className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 "
-                                        onChange={(e) =>
-                                            setData("priority", e.target.value)
-                                        }
+                                        className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                        onChange={handleChange}
                                         required
                                     >
-                                        <MenuItem selected>
-                                            Choose Priority
-                                        </MenuItem>
-
                                         {priority.map((prio, index) => (
                                             <MenuItem
                                                 key={index}
@@ -243,22 +272,18 @@ export default function Create({ developer, Id }) {
                                         }}
                                     />
                                     <Select
-                                        value={data.level}
+                                        value={item.level}
                                         name="level"
                                         style={{
                                             height: "42px",
                                             width: "352px",
                                             marginLeft: "20px",
                                         }}
-                                        className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 "
-                                        onChange={(e) =>
-                                            setData("level", e.target.value)
-                                        }
+                                        className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                                        onChange={handleChange}
                                         required
                                     >
-                                        <MenuItem selected>
-                                            Choose Label
-                                        </MenuItem>
+                                        <MenuItem>Choose level</MenuItem>
                                         {level.map((lab, index) => (
                                             <MenuItem
                                                 key={index}
@@ -285,70 +310,34 @@ export default function Create({ developer, Id }) {
                                         fontWeight: "bold",
                                     }}
                                 />
-                                {/* <Select
-                                    multiple
-                                    value={data.developer}
-                                    style={{ height: "42px" }}
-                                    onChange={handleDeveloperSelect}
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                >
-                                    {developer.map(
-                                        (dev, index) => (
-                                            console.log(dev, "devvvvvv"),
-                                            (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={dev.id}
-                                                    label={dev.name}
-                                                >
-                                                    {dev.name} (
-                                                    {dev.user_role ==
-                                                    "senior_developer"
-                                                        ? "Senior"
-                                                        : "Junior"}
-                                                    )
-                                                </MenuItem>
-                                            )
-                                        )
-                                    )}
-                                </Select> */}
                                 <Grid item xs={12}>
-                                    {developer.length == 0 ? (
-                                        <Alert severity="info">
-                                            Don't Have Any Developer
-                                        </Alert>
-                                    ) : (
-                                        developer.map((dev, index) => (
-                                            <Button
-                                                key={index}
-                                                variant={
-                                                    data.developer.includes(dev.id)
-                                                        ? "contained"
-                                                        : "outlined"
-                                                }
-                                                size="small"
-                                                onClick={() =>
-                                                    handleDeveloper(dev?.id)
-                                                }
-                                                style={{ margin: "2px" }}
-                                            >
-                                                {dev.name} (
-                                                {dev.user_role ==
-                                                "senior developer"
-                                                    ? "Senior"
-                                                    : "Junior"}
-                                                )
-                                            </Button>
-                                        ))
-                                    )}
+                                    {developer.map((dev, index) => (
+                                        <Button
+                                            key={index}
+                                            variant={
+                                                item.developer.includes(dev.id)
+                                                    ? "contained"
+                                                    : "outlined"
+                                            }
+                                            size="small"
+                                            onClick={() =>
+                                                handleDeveloper(dev?.id)
+                                            }
+                                            style={{ margin: "2px" }}
+                                        >
+                                            {dev.name} (
+                                            {dev.user_role == "senior developer"
+                                                ? "Senior"
+                                                : "Junior"}
+                                            )
+                                        </Button>
+                                    ))}
                                 </Grid>
                                 <InputError
                                     message={errors.developer}
                                     className="mt-2"
                                 />
                             </div>
-
-
                             <div className="flex items-center justify-center m-8">
                                 <PrimaryButton
                                     className="ms-4"
@@ -359,13 +348,13 @@ export default function Create({ developer, Id }) {
                                         backgroundColor: "#1976d2",
                                     }}
                                 >
-                                    Create Task
+                                    Update Task
                                 </PrimaryButton>
                             </div>
                         </form>
                     </Box>
                 </Fade>
             </Modal>
-        </div>
+        </>
     );
 }

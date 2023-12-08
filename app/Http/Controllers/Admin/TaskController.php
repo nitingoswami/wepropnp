@@ -42,8 +42,8 @@ class TaskController extends Controller
 
     public function save (Request $request,$id ){
             $this->taskRepository->save($id,$request->all());
-            return Redirect::route('admin.project.detail',$id);
-
+            // return Redirect::route('admin.project.detail',$id);
+            return redirect()->back();
         }
 
 
@@ -62,7 +62,9 @@ class TaskController extends Controller
 
 
         $proj_id = $this->taskRepository->update($id ,$request->all());
-        return Redirect::route('admin.project.detail',$proj_id);
+        // return Redirect::route('admin.project.detail',$proj_id);
+        return redirect()->back();
+
 
 
     }
@@ -77,6 +79,8 @@ class TaskController extends Controller
 
     public function status(Request $request, $id){
         $this->taskRepository->status($id,$request->only('status'));
-        return Redirect::back();
+        // return Redirect::back();
+        return redirect()->back();
+
     }
 }

@@ -6,12 +6,12 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import Details from "@/Components/Common/Project/Admin/Details";
+import Details from "@/Components/Common/Project/Details";
 import List from "@/Components/Common/Project/Task/List";
 import View from "../Task/View";
 
 export default function ProjectDetail({ data, auth, user, task }) {
-    console.log(data,'datttt');
+    console.log(auth,'authhh');
     const [value, setValue] = React.useState("1");
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -44,7 +44,7 @@ export default function ProjectDetail({ data, auth, user, task }) {
 
                     <TabPanel value="2">
                         {/* <List data={task} Id={id} developer={user} /> */}
-                        <View data={task} Id={id} developer={user} />
+                        <View data={task} Id={id} developer={user} auth={auth}/>
                     </TabPanel>
 
                 </TabContext>

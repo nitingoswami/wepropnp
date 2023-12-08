@@ -12,7 +12,7 @@ import {
 
 export default function Details({ user, data, auth }) {
     const { setData, get, processing, errors, setError } = useForm();
-    console.log(user,'datatt');
+    console.log(auth,'authhhhh');
 
     const handleUpdate = (id) => {
         get(route("admin.project.edit", { id }));

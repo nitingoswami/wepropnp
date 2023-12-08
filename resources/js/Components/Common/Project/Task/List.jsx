@@ -1,5 +1,61 @@
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import {
+    Alert,
+     Chip,
+    Collapse,
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+} from "@mui/material";
+import { useState } from "react";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useForm } from "@inertiajs/react";
+import StatusStyle from "@/Constant/StatusStyle";
+import DateTimeFormat from "@/Util/DateTimeFormat";
+import Detail from "./Detail";
+import Create from "./Create";
+import Edit from "./Edit";
+export default function List({auth,developer,Id,data}){
 
-export default function List({}){
+    const [page, setPage] = useState(0);
+    const [expandedRows, setExpandedRows] = useState([]);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const { item, setItem, get, post, processing, errors, reset } = useForm();
+
+    const handleView = (id) => {
+        get(route("admin.task-detail", { id }));
+    };
+
+
+    const toggleRow = (id) => {
+        if (expandedRows.includes(id)) {
+            setExpandedRows(expandedRows.filter((rowId) => rowId !== id));
+        } else {
+            setExpandedRows([...expandedRows, id]);
+        }
+    };
+
+
+    const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+
+       const handleUpdate = (id) => {
+        get(route("admin.edit-task", { id }));
+    };
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(event.target.value, 10);
+        setPage(0);
+    };
     return (
         <>
                         <div
@@ -10,7 +66,8 @@ export default function List({}){
                             }}
                         >
 
-                            {/* <Create developer={developer} Id={Id}/> */}
+                            <Create developer={developer} Id={Id} auth={auth}/>
+
 
                         </div>
 
@@ -120,7 +177,7 @@ export default function List({}){
                                                             </IconButton>
                                                             &emsp;
                                                             <IconButton aria-label="edit">
-                                                            <Edit devId={item.developer_id} developer={developer} data={item}/>
+                                                            <Edit devId={item.developer_id} developer={developer} data={item} auth={auth} />
                                                             </IconButton>
                                                         </TableCell>
                                                     </TableRow>
@@ -143,7 +200,7 @@ export default function List({}){
                                                                 )}
                                                                 unmountOnExit
                                                             >
-                                                                <Details
+                                                                <Detail
                                                                     data={item}
                                                                     developer={
                                                                         developer

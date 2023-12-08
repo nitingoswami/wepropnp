@@ -22,15 +22,14 @@ import FormatDate from "@/Util/FormatDate";
 import DateTimeFormat from "@/Util/DateTimeFormat";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-// import Create from "./Create";
-// import Detail from "./Detail";
+import Create from "@/Pages/Admin/Project/Create";
 
 export default function List({ data, auth, developer, manager }) {
 
     const { setData, get, processing, errors, setError } = useForm();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
+      console.log(auth,'authhhh');
     const handleView = (id) => {
        if(auth.user.user_role=="admin"){
         get(route("admin.project.detail", { id }));

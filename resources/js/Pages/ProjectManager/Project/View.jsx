@@ -1,4 +1,4 @@
-import List from "@/Components/Common/Project/Admin/List";
+import List from "@/Components/Common/Project/List";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {
     Alert,
@@ -7,7 +7,7 @@ import {
 
 
 export default function View({ data, auth, developer, manager }) {
-console.log(data,'ddddddddddd');
+console.log(auth,'ddddddddddd');
 
     return (
         <AuthenticatedLayout user={auth.user}>

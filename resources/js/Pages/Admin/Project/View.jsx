@@ -23,7 +23,7 @@ import DateTimeFormat from "@/Util/DateTimeFormat";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Create from "./Create";
-import List from "@/Components/Common/Project/Admin/List";
+import List from "@/Components/Common/Project/List";
 
 export default function View({ data, auth, developer, manager }) {
 
