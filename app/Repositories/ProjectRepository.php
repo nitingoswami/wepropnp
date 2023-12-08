@@ -1,6 +1,4 @@
 <?php
-
-
 namespace App\Repositories;
 use App\Interfaces\ProjectInterface;
 use App\Models\Project;
@@ -17,20 +15,30 @@ class ProjectRepository implements ProjectInterface
         $user = Auth::user();
         $role = $user->user_role;
 
-        if($role == "admin"){
+        if($role === "admin" || $role === "hr manager"){
             $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
             $manager = User::where('user_role','project manager')->get();
             $data = Project::all();
             return [$data , $developer ,$manager];
         }
 
-        else if($role ="project manager"){
+        else if($role ==="project manager"){
             $project = Project::where('project_manager',$user->name)->get();
             $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
             $manager = User::where('user_role','project manager')->get();
             return [$project , $developer , $manager];
         }
-
+        else if($role === "junior developer" || $role === 'senior developer')
+        {
+            $dev_id = $user->id;
+            $project_id = Developer::where('developer_id', $dev_id)
+            ->pluck('project_id')
+            ->toArray();
+            $project = Project::whereIn('id',$project_id)->get();
+            $developer = User::whereIn('user_role',['senior developer','junior developer'])->get();
+            $manager = User::where('user_role','project manager')->get();
+            return [$project , $developer , $manager];
+        }
 
     }
 
@@ -114,7 +122,7 @@ class ProjectRepository implements ProjectInterface
         $user = Auth::user();
         $role = $user->user_role;
 
-        if($role == "admin"){
+        if($role == "admin" || " hr manager"){
             $data = Project::findOrFail($id);
             $dev_id = Developer::where(['assignable_id'=>$data->id , 'assignable_type'=> 'App\Models\Project'])->pluck('developer_id');
             $developer = explode(',',$dev_id);
@@ -141,4 +149,5 @@ class ProjectRepository implements ProjectInterface
            ];
         }
     }
+
 }

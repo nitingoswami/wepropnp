@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
         else if($user->user_role == "hr manager"){
             return redirect()->intended('hr-manager/dashboard');
         }
-        else if($user->user_role == "senior developer" || "junior developer"){
+        else if($user->user_role == "junior developer" || "senior developer"){
             return redirect()->intended('developer/dashboard');
         }
     }

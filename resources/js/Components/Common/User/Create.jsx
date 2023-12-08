@@ -15,10 +15,8 @@ import {
     Button,
     FormControl,
     FormControlLabel,
-    FormLabel,
     Radio,
     RadioGroup,
-    Select,
     Typography,
 } from "@mui/material";
 
@@ -38,7 +36,6 @@ export default function Create({ auth }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-
     const { data, setData, get, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
@@ -51,8 +48,15 @@ export default function Create({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("admin.user.save"));
+            {
+            auth.user.user_role == "admin" ?
+            post(route("admin.user.save"))
+            :
+            post(route('hrManager.user.save'))
+        }
         setOpen(false);
+        setData({});
+
     };
 
     return (
@@ -209,39 +213,7 @@ export default function Create({ auth }) {
                                 className="mt-2"
                             />
                         </div>
-                        {/* <div className="mt-4">
-                            <InputLabel
-                                htmlFor="user_role"
-                                value="Select User Role"
-                            />
-                            <select
-                                value={data.user_role}
-                                name="user_role"
-                                className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                onChange={(e) =>
-                                    setData("user_role", e.target.value)
-                                }
-                                required
-                            >
-                                <option>Select User Role</option>
-                                <option value="admin">Admin</option>
-                                <option value="hr_manager">HR Manager</option>
-                                <option value="project_manager">
-                                    Project Manager
-                                </option>
-                                <option value="senior_developer">
-                                    Senior Developer
-                                </option>
-                                <option value="junior_developer">
-                                    Junior Developer
-                                </option>
-                            </select>
 
-                            <InputError
-                                message={errors.user_role}
-                                className="mt-2"
-                            />
-                        </div> */}
                         <div className="mt-4">
                             <FormControl component="fieldset">
                                 <InputLabel
@@ -255,12 +227,16 @@ export default function Create({ auth }) {
                                     }
                                     row
                                 >
-                                    <FormControlLabel
+                                    {
+                                        auth.user.user_role=="admin" &&
+                                        <FormControlLabel
                                         value="admin"
                                         control={<Radio />}
                                         label="Admin"
                                         aria-setsize={"small"}
                                     />
+                                    }
+
                                     <FormControlLabel
                                         value="hr manager"
                                         control={<Radio />}
@@ -344,6 +320,11 @@ export default function Create({ auth }) {
                                     >
                                         Next
                                     </PrimaryButton>
+                                    <Button onClick={handleClose} variant="contained" color="success"
+                                    style={{
+                                        height: "33px", marginLeft:"10px"
+                                    }}
+                                    >Close</Button>
                                 </div>
                             </>
                         )}

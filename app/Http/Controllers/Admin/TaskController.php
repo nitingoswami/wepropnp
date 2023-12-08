@@ -29,8 +29,8 @@ class TaskController extends Controller
         $data = $items[0];
         $id = $items[1];
         $developers = $items[2];
-        return Inertia::render('Admin/Task/List',['data'=>$data,'Id'=>$id ,'developer'=>$developers]);
- }
+        return Inertia::render('Admin/Task/View',['data'=>$data,'Id'=>$id ,'developer'=>$developers]);
+    }
 
 
     public function create ($id){

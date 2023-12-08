@@ -6,8 +6,8 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import Details from "../Salary/Detail";
 import UserDetail from "@/Components/Common/User/UserDetail";
+import DetailSalary from "../Salary/Detail";
 import History from "@/Components/Common/User/History";
 
 export default function Detail({ data, auth, salary }) {
@@ -47,11 +47,12 @@ export default function Detail({ data, auth, salary }) {
                         <UserDetail data={data} auth={auth}/>
                     </TabPanel>
                     <TabPanel value="2">
-                        <Details salary={salary} data={data} auth={auth}/>
+
+                        <DetailSalary salary={salary} data={data}/>
                     </TabPanel>
 
                     <TabPanel value="3">
-                        <History data={data} auth={auth}/>
+                        <History data={data} />
                     </TabPanel>
 
                 </TabContext>

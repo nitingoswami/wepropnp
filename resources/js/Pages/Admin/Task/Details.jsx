@@ -1,13 +1,12 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import FormatDate from "@/Util/FormatDate";
 import { router, useForm } from "@inertiajs/react";
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Chip, Grid, IconButton, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, IconButton, MenuItem, Select, Typography } from "@mui/material";
 import DateTimeFormat from "@/Util/DateTimeFormat";
 import StatusStyle from "@/Constant/StatusStyle";
 import Edit from "./Edit";
 import { useState } from "react";
-import StatusPopup from "./StatusPopup";
+import StatusPopup from "../../../Components/Common/Project/Task/StatusPopup";
 import CheckIcon from '@mui/icons-material/Check';
 
 export default function Details({data ,developer}){

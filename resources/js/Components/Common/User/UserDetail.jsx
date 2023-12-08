@@ -2,12 +2,11 @@ import Box from "@mui/material/Box";
 import { Button, Grid, Typography, Paper, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useForm } from "@inertiajs/react";
+import Edit from "./Edit";
 
-export default function UserDetail({ data }) {
+export default function UserDetail({ data ,auth }) {
     const { setData, get, processing, errors, setError } = useForm();
-    const handleUpdate = (id) => {
-        get(route("admin.user.edit", { id }));
-    };
+
     return (
         <Box sx={{ backgroundColor: "#f7f7f7" }} className="pb-5">
             <Grid container sx={{}}>
@@ -15,7 +14,6 @@ export default function UserDetail({ data }) {
                     item
                     xs={12}
                     style={{
-                        // borderRadius: '15px',
                         background: "rgb(236 236 236)",
                         display: "flex",
                         justifyContent: "space-between",
@@ -30,9 +28,7 @@ export default function UserDetail({ data }) {
                         sx={{ display: "flex", justifyContent: "end" }}
                         onClick={() => handleUpdate(data.id)}
                     >
-                        <IconButton aria-label="edit" color="primary">
-                            <EditIcon color="info" />
-                        </IconButton>
+                        <Edit auth={auth} user={data}/>
                     </Button>
                 </Grid>
             </Grid>

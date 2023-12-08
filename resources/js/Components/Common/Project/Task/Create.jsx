@@ -51,14 +51,13 @@ export default function Create({ developer, Id ,auth }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if(auth.user.user_role="admin"){
-        //     console.log("helllo");
-        //     post(route("admin.project.task.save", { id: Id }));
-        // }
-        // else if(auth.user.user_role=="project manager"){
-        //     console.log("project manager");
-            post(route("projectManager.project.task.save", { id: Id }));
-        // }
+        {
+            auth.user.user_role == "admin" ?
+           post(route("admin.project.task.save", { id: Id }))
+           :
+           post(route("projectManager.project.task.save", { id: Id }))
+
+        }
 
         setOpen(false);
 
@@ -369,6 +368,11 @@ export default function Create({ developer, Id ,auth }) {
                                 >
                                     Create Task
                                 </PrimaryButton>
+                                <Button onClick={handleClose} variant="contained" color="success"
+                                    style={{
+                                        height: "33px", marginLeft:"10px"
+                                    }}
+                                    >Close</Button>
                             </div>
                         </form>
                     </Box>

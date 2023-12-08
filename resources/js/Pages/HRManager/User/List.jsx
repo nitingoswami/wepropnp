@@ -23,14 +23,22 @@ import { useState } from "react";
 import Create from "@/Components/Common/User/Create";
 import Edit from "@/Components/Common/User/Edit";
 
-export default function List({data, auth }) {
+export default function View({data, auth }) {
 
     const {  setData, get, processing, errors, setError } = useForm();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
         const handleView =(id) =>{
-        get(route("admin.user.detail", {id}));
+            {
+                if(auth.user.user_role=="admin"){
+                    get(route("admin.user.detail", {id}));
+                }
+                else if(auth.user.user_role == "hr manager")
+                {
+                    get(route("hrManager.user.detail", {id}));
+                }
+
+            }
     }
 
     const handleChangePage = (event, newPage) => {
@@ -51,11 +59,7 @@ export default function List({data, auth }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg px-2 py-3">
                         <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mb={2}>
                             <div><PeopleIcon/> Users</div>
-                            {/* <Link href={route('admin.user.create')}>
-                                <Button className="capitalize" variant="contained" color="primary" size={"small"} startIcon={<AddIcon/>}>
-                                    Create
-                                </Button>
-                            </Link> */}
+
                             <div
                             style={{
                                 margin: "10px",
@@ -63,7 +67,6 @@ export default function List({data, auth }) {
                                 justifyContent: "end",
                             }}
                         >
-
                             <Create auth={auth}/>
 
                         </div>
@@ -102,18 +105,18 @@ export default function List({data, auth }) {
                                                 <IconButton aria-label="detail">
                                                    <VisibilityIcon sx={{color:"rgba(0, 0, 0, 0.54)"}} onClick={()=>handleView(item.id)}/>
                                                 </IconButton>
-                                                    &emsp;
-                                                    {/* <Link
-                                                        href={route('admin.user.edit',{id:item.id})}
-                                                        method="get"
-                                                    >
-                                                    <IconButton aria-label="edit" color="primary">
-                                                            <ModeEditIcon color="info"/>
-                                                    </IconButton>
-                                                    </Link> */}
-                                                    <Edit auth={auth} user={item}/>
-                                                    &emsp;
-                                                   <Popover id={item.id}/>
+
+                                                    {
+                                                        item.user_role !== "admin" &&
+                                                        <>
+                                                        &emsp;
+                                                        <Edit auth={auth} user={item}/>
+                                                        &emsp;
+                                                        <Popover id={item.id}/>
+                                                        </>
+                                                    }
+
+
                                                 </TableCell>
                                             </TableRow>
                                         );

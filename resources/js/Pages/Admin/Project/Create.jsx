@@ -318,6 +318,11 @@ export default function Create({ auth, developer, manager }) {
                                 >
                                     Create Project
                                 </PrimaryButton>
+                                <Button onClick={handleClose} variant="contained" color="success"
+                                    style={{
+                                        height: "33px", marginLeft:"10px"
+                                    }}
+                                    >Close</Button>
                             </div>
                         </form>
                     </Box>

@@ -15,9 +15,11 @@ class Role
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if ($request->user()->user_role !== $role) {
-            return response()->json(['msg' => 'Can not access this resource!'])->setStatusCode(402);
+        if ($request->user()->user_role === $role) {
+            return $next($request);
+        } else if($role == 'developer') {
+            return $next($request);
         }
-        return $next($request);
+        return response()->json(['msg' => 'Can not access this resource!'])->setStatusCode(402);
     }
 }

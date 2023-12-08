@@ -126,74 +126,16 @@ export default function Details({ user, data, auth }) {
                 </Grid>
 
                 <br />
-                {/* <Grid container className="px-3">
-                    <Grid item xs={12}>
-                        <TableContainer
-                            component={Paper}
-                            sx={{
-                                padding: "10px",
-                                border: "1px solid whitesmoke",
-                            }}
-                        >
-                            <Table aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell sx={{ fontWeight: "bold" }}>
-                                             ID
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: "bold" }}>
-                                             Name
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: "bold" }}>
-                                             Email
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: "bold" }}>
-                                             Phone
-                                        </TableCell>
-                                        <TableCell sx={{ fontWeight: "bold" }}>
-                                             Role
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {user.map((item, j) => {
-                                        return (
-                                            <TableRow key={j + 1}>
-                                                <TableCell>{item.id}</TableCell>
-                                                <TableCell className="capitalize">
-                                                    {item.name}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {item.email}
-                                                </TableCell>
-                                                <TableCell>
-                                                             {item.contact_no}
-                                                </TableCell>
-                                                <TableCell className="capitalize">
-                                                    {item.user_role.replace(
-                                                        "_",
-                                                        " "
-                                                    )}
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Grid>
-                </Grid> */}
+
                 <Box>
                     {
                         user.map((item, j) =>
                         {
                            return (
                             <Chip label={item.name} className="capitalize" sx={{ margin:"10px"}}
-                             color={item.user_role == "senior_developer" ? "primary" : "secondary"}/>
+                             color={item.user_role == "senior developer" ? "primary" : "success"}/>
 
                            );
-
-
                         })
                     }
                 </Box>

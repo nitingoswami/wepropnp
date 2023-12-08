@@ -1,14 +1,34 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
-import GuestLayout from "@/Layouts/GuestLayout";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, router, useForm } from "@inertiajs/react";
-import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { FormControl, FormControlLabel, Radio, RadioGroup, IconButton ,Typography, Button } from "@mui/material";
 import InputError from "@/Components/InputError";
+import {  router, useForm } from "@inertiajs/react";
+import EditIcon from "@mui/icons-material/Edit";
+import * as React from "react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+};
+
 
 export default function Edit({ auth, user }) {
+    console.log(auth,'authhhh');
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const { data, setData, get, post, processing, errors, reset } = useForm();
 
     const [value, setValue] = useState({
@@ -25,28 +45,41 @@ export default function Edit({ auth, user }) {
             };
         });
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route("admin.user.update", [user.id]), value);
+        {
+            auth.user.user_role == "admin" ?
+            router.post(route("admin.user.update", [user.id]), value)
+            :
+            router.post(route("hrManager.user.update", [user.id]), value);
+        }
+        setOpen(false);
+
     };
+    console.log(user.user_role,'userrrr');
 
     return (
-        <AuthenticatedLayout user={auth.user}>
-            {/* <GuestLayout> */}
-            <Head title="Edit User" />
-
-            <div className="mt-5 flex flex-col sm:justify-center items-center sm:pt-0 bg-gray-100">
-                {/* <div className="w-full  mt-0 px-3 py-2 bg-white shadow-md overflow-hidden sm:rounded-lg" style={{width:"60%",marginBottom:"10px"}}>                <Head title="Create Project" /> */}
-
-                <div
-                    className="w-full  mt-0 px-3 py-2 shadow-md bg-white overflow-hidden sm:rounded-lg"
-                    style={{
-                        width: "60%",
-                        alignContent: "center",
-                        justifyContent: "space-between",
-                        boxShadow: "-1px -2px 5px 5px #e8e3e3",
-                    }}
-                >
+       <>
+           <IconButton aria-label="edit" color="primary">
+                <EditIcon color="info" onClick={handleOpen} />
+            </IconButton>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+                style={{ width: "" }}
+            >
+                <Fade in={open}>
+                    <Box sx={style} style={{ width: "800px" }}>
                     <form onSubmit={handleSubmit}>
                         <div
                             style={{
@@ -113,33 +146,6 @@ export default function Edit({ auth, user }) {
 
                         </div>
 
-                        {/* <div className="mt-4">
-                            <InputLabel
-                                htmlFor="user_role"
-                                value="Select User Role"
-                            />
-
-                            <select
-                                value={value.user_role}
-                                name="user_role"
-                                className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                onChange={(e) => handleChange(e)}
-                                required
-                            >
-                                <option value="admin">Admin</option>
-                                <option value="hr_manager">HR Manager</option>
-                                <option value="project_manager">
-                                    Project Manager
-                                </option>
-                                <option value="senior_developer">
-                                    Senior Developer
-                                </option>
-                                <option value="junior_developer">
-                                    Junior Developer
-                                </option>
-                            </select>
-
-                        </div> */}
                         <div className="mt-4">
                             <FormControl component="fieldset">
                                 <InputLabel
@@ -152,12 +158,15 @@ export default function Edit({ auth, user }) {
                                     name="user_role"
                                     row
                                 >
-                                    <FormControlLabel
+                                    {
+                                      auth.user.user_role == "admin"  &&
+                                        <FormControlLabel
                                         value="admin"
                                         control={<Radio />}
                                         label="Admin"
                                         aria-setsize={"small"}
                                     />
+                                    }
                                     <FormControlLabel
                                         value="hr manager"
                                         control={<Radio />}
@@ -202,11 +211,15 @@ export default function Edit({ auth, user }) {
                             >
                                 Update User
                             </PrimaryButton>
+                            <Button onClick={handleClose} variant="contained" color="success"
+                                    style={{
+                                        height: "33px", marginLeft:"10px"
+                                    }}> Close</Button>
                         </div>
                     </form>
-                    {/* </GuestLayout> */}
-                </div>
-            </div>
-        </AuthenticatedLayout>
+                    </Box>
+                </Fade>
+            </Modal>
+        </>
     );
 }

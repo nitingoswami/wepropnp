@@ -32,7 +32,6 @@ export default function Edit({ data, developer, devId ,auth }) {
     const { post, get, processing, errors, reset } = useForm();
 
     const result = Object.keys(developer).map((key) => developer[key]);
-
     const [item, setItem] = useState({
         task_name: data.task_name,
         description: data.description,
@@ -46,9 +45,6 @@ export default function Edit({ data, developer, devId ,auth }) {
     const handleChange = (e) => {
         setItem({ ...item, [e.target.name]: e.target.value });
     };
-    // const handleDeveloperSelect = (e) => {
-    //     setItem({ ...item, developer: e.target.value });
-    // };
 
     const handleDeveloper = (id) => {
         setItem((prev) => ({
@@ -60,8 +56,15 @@ export default function Edit({ data, developer, devId ,auth }) {
     };
 
     const handleSubmit = (e) => {
+        console.log("handle submit");
         e.preventDefault();
-        router.post(route("projectManager.project.task.update", { id: data.id }), item);
+        {
+            auth.user.user_role == "admin" ?
+            router.post(route("admin.project.task.update", { id: data.id }), item)
+
+            :
+            router.post(route("projectManager.project.task.update", { id: data.id }), item);
+        }
         setOpen(false);
     };
 
@@ -350,6 +353,11 @@ export default function Edit({ data, developer, devId ,auth }) {
                                 >
                                     Update Task
                                 </PrimaryButton>
+                                <Button onClick={handleClose} variant="contained" color="success"
+                                    style={{
+                                        height: "33px", marginLeft:"10px"
+                                    }}
+                                    >Close</Button>
                             </div>
                         </form>
                     </Box>

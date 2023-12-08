@@ -31,11 +31,18 @@ export default function List({ data, auth, developer, manager }) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
       console.log(auth,'authhhh');
     const handleView = (id) => {
-       if(auth.user.user_role=="admin"){
+       if(auth.user.user_role==="admin"){
         get(route("admin.project.detail", { id }));
        }
-       else if(auth.user.user_role=="project manager"){
+       else if(auth.user.user_role==="project manager"){
         get(route('projectManager.project.detail', { id }));
+       }
+       else if(auth.user.user_role === "hr manager"){
+        get(route('.project.detail', { id }));
+       }
+       else if(auth.user.user_role === "junior developer" || auth.user.user_role === "senior developer")
+       {
+        get(route('developer.project.detail',{id}));
        }
     };
 

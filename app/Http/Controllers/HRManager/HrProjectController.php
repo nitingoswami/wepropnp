@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ProjectManager;
+namespace App\Http\Controllers\HRManager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,8 +8,7 @@ use App\Interfaces\ProjectInterface;
 use App\Repositories\ProjectRepository;
 use Inertia\Inertia;
 
-
-class ManagerProjectController extends Controller
+class HrProjectController extends Controller
 {
     private ProjectInterface $projectRepository;
 
@@ -23,17 +22,13 @@ class ManagerProjectController extends Controller
         $developer= $items[1];
         $manager= $items[2];
 
-        return Inertia::render('ProjectManager/Project/View',['data'=>$data ,"developer"=>$developer ,'manager'=>$manager]);
+        return Inertia::render('HRManager/Project/View',['data'=>$data ,"developer"=>$developer ,'manager'=>$manager]);
     }
-
     public function Detail($id){
         $allData = $this->projectRepository->detail($id);
         $data = $allData[0];
         $user = $allData[1];
         $task = $allData[2];
-
-        return Inertia::render('ProjectManager/Project/ProjectDetail', ['data' => $data, 'user' => $user,'task'=>$task ]);
+        return Inertia::render('HRManager/Project/ProjectDetail', ['data' => $data, 'user' => $user,'task'=>$task ]);
     }
-
-
 }

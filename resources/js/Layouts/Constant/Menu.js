@@ -47,23 +47,31 @@ const Menu =  {
                 "hrManager.user.edit",
                 "hrManager.user.detail",
                 "hrManager.user.history",
+                "hrManager.user.salary.create",
+                "hrManager.user.salary.detail",
+
             ],
         },
-        // {
-        //     title: 'Project',
-        //     route: "hrManager.project.list",
-        //     active: [
-        //         "hrManager.project.list",
-        //         "hrManager.project.task.list",
-        //     ]
-        // },
+        {
+            title: 'Project',
+            route: "hrManager.project.list",
+            active: [
+                "hrManager.project.list",
+                "hrManager.project.detail",
+                "hrManager.project.task.detail",
+                "hrManager.project.task.list",
+
+            ]
+        },
 
     ],
     "project manager":[
         {
             title: 'Dashboard',
             route: "projectManager.dashboard",
-            active: ["projectManager.dashboard"],
+            active: [
+                "projectManager.dashboard",
+        ],
         },
 
         {
@@ -71,19 +79,47 @@ const Menu =  {
             route: "projectManager.project.list",
             active: [
                 "projectManager.project.list",
-                // "projectManager.project.create",
-                // "projectManager.project.edit",
-                // "projectManager.project.detail",
-                // "projectManager.project.history",
+                "projectManager.project.detail",
+                "projectManager.project.task.create",
+                "projectManager.project.task.edit",
+                "projectManager.project.task.list",
+                "projectManager.project.task.detail",
+
             ],
         },
     ],
     "junior developer": [
-
+        {
+            title: 'Dashboard',
+            route: "developer.dashboard",
+            active: ["developer.dashboard"],
+        },
+        {
+            title: 'Project',
+            route: "developer.project.list",
+            active: [
+                "developer.project.list",
+                "developer.project.detail",
+            ],
+        },
     ],
-    "junior developer": [
+    "senior developer": [
 
-    ]
+        {
+            title: 'Dashboard',
+            route: "developer.dashboard",
+            active: ["developer.dashboard"],
+        },
+        {
+            title: 'Project',
+            route: "developer.project.list",
+            active: [
+                "developer.project.list",
+
+            ],
+        },
+    ],
+
 };
 
 export default Menu;

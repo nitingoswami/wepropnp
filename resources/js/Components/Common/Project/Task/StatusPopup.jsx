@@ -1,40 +1,44 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import DeleteIcon from "@mui/icons-material/Delete";
-import WarningOutlinedIcon from "@mui/icons-material/WarningOutlined";
-import { useForm } from "@inertiajs/react";
-import { IconButton, TextField } from "@mui/material";
+import { router, useForm } from "@inertiajs/react";
+import { Alert, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
-export default function StatusPopup() {
+export default function StatusPopup({auth}) {
     const [open, setOpen] = useState(true);
     const [state , setState] = useState({
         files :[],
     });
-   
+
     const { data, setData, post, processing, errors, setError } = useForm();
-   
-    const handleClick = () => {
-        setOpen(true);
-    };
 
     const handleClose = () => {
         setOpen(false);
     };
-   
-    
-     const  fileSelectedHandler = (e) => {
+
+
+    const  fileSelectedHandler = (e) => {
         setState({ files: [...state.files, ...e.target.files] })
-      }
+    }
+
+    const handleData = () => {
+        {
+            auth.user.user_role === "senior developer" ||
+            auth.user.user_role === "junior developer" ?
+            router.post(route('developer.project.saveStatus'))
+            : auth.user.user_role === "admin" ?
+            router.post(route('admin.project.saveStatus'))
+            : <Alert> Route not found File ...</Alert>
+        }
+    }
 
     return (
         <React.Fragment>
-            
+
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -52,7 +56,7 @@ export default function StatusPopup() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    
+                    <Button onClick={handleData}>Save</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

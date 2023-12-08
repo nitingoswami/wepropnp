@@ -2,11 +2,9 @@ import { Box, Button, Grid, Typography, Paper } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useForm } from "@inertiajs/react";
 
-export default function Details({salary ,data}){
+export default function DetailSalary({salary ,data}){
     const { setData, get, processing, errors, setError } = useForm();
-    // const handleUpdate = (id) => {
-    //     get(route("user.edit", { id }));
-    // };
+
     return (
              <Box
                sx={{ backgroundColor: '#f7f7f7', }} className="pb-5" >
@@ -19,10 +17,11 @@ export default function Details({salary ,data}){
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
+                            height:"35px"
                         }}
                     >
                         <Typography
-                            sx={{ fontWeight: "bold", marginLeft: "10px" }}
+                            sx={{ fontWeight: "bold", marginLeft: "10px",   }}
                         >
                             Salary Information
                         </Typography>

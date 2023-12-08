@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SalaryController;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Developer\DeveloperDashboardController;
+use App\Http\Controllers\Developer\DeveloperProjectController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Inertia\Inertia;
 use App\Http\Controllers\ProjectManager\DashboardController;
@@ -16,7 +18,9 @@ use App\Http\Controllers\ProjectManager\ManagerProjectController;
 use App\Http\Controllers\ProjectManager\ManagerTaskController;
 
 use App\Http\Controllers\HRManager\HrDashboardController;
-
+use App\Http\Controllers\HRManager\HrUserController;
+use App\Http\Controllers\HRManager\HrSalaryController;
+use App\Http\Controllers\HRManager\HrProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,12 +124,44 @@ Route::prefix('hr-manager')->name('hrManager.')->middleware(['auth', 'role:hr ma
     Route::prefix('dashboard')->name('dashboard')->controller(HrDashboardController::class)->group( function () {
         Route::get('/','index');
     });
-    Route::prefix('user')->name('user.')->controller(UserController::class)->group( function () {
+    Route::prefix('user')->name('user.')->controller(HrUserController::class)->group( function () {
         Route::get('list','list')->name('list');
+        Route::post('/save','save')->name('save');
+        Route::post('/update/{id}','update')->name('update');
+        Route::get('/detail/{id}','detail')->name('detail');
+        Route::post('/delete/{id}','delete')->name('delete');
+
+
+        Route::prefix('salary')->name('salary.')->controller(HrSalaryController::class)->group( function () {
+            Route::get('create','create')->name('create');
+            Route::post('/save/{id}','save')->name('save');
+        });
+    });
+    Route::prefix('project')->name('project.')->controller(HrProjectController::class)->group( function () {
+        Route::get('list','list')->name('list');
+        Route::get('/detail/{id}','detail')->name('detail');
+
+        Route::prefix('task')->name('task.')->controller(HrTaskController::class)->group( function () {
+            Route::get('list','list')->name('list');
+            Route::post('/detail/{id}','detail')->name('detail');
+        });
     });
 });
 
+Route::prefix('developer')->name('developer.')->middleware(['auth', 'role:developer'])->group(function () {
+        Route::prefix('dashboard')->name('dashboard')->controller(DeveloperDashboardController::class)->group( function () {
+            Route::get('/','index');
+        });
+        Route::prefix('project')->name('project.')->controller(DeveloperProjectController::class)->group( function () {
+            Route::get('list','list')->name('list');
+            Route::get('/detail/{id}','detail')->name('detail');
 
+            Route::prefix('task')->name('task.')->controller(DeveloperTaskController::class)->group( function () {
+                Route::get('list','list')->name('list');
+                Route::post('/status/{id}','detail')->name('status');
+            });
+        });
+});
 
 require __DIR__.'/auth.php';
 
