@@ -47,13 +47,16 @@ export default function Create({ auth }) {
 
 
     const submit = (e) => {
+        console.log(auth.user ,'userrrr');
         e.preventDefault();
             {
-            auth.user.user_role == "admin" ?
+            auth.user.user_role === "admin" ?
             post(route("admin.user.save"))
             :
             post(route('hrManager.user.save'))
         }
+        // post(route("admin.user.save"))
+
         setOpen(false);
         setData({});
 

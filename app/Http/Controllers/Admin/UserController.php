@@ -37,12 +37,14 @@ class UserController extends Controller
         $data = $this->userRepository->save($request);
         $id = $data->id;
         if($data->user_role === 'admin'){
-            // return Redirect::route('admin.user.list');
+            dd("not admin");
             return Redirect::back();
         }
         else{
+            dd("hello");
             return Redirect::route('admin.user.salary.create' ,['user'=>$id]);
         }
+        dd("nothing");
     }
 
     public function edit(Request $request , $id){
