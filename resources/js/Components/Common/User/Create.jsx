@@ -47,7 +47,6 @@ export default function Create({ auth }) {
 
 
     const submit = (e) => {
-        console.log(auth.user ,'userrrr');
         e.preventDefault();
             {
             auth.user.user_role === "admin" ?
