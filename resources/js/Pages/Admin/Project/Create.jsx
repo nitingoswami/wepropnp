@@ -322,7 +322,7 @@ export default function Create({ auth, developer, manager }) {
                                     style={{
                                         height: "33px", marginLeft:"10px"
                                     }}
-                                    >Close</Button>
+                                    >Cancle</Button>
                             </div>
                         </form>
                     </Box>

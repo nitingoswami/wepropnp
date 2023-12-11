@@ -32,12 +32,20 @@ export default function Edit({ data, developer, devId ,auth }) {
     const { post, get, processing, errors, reset } = useForm();
 
     const result = Object.keys(developer).map((key) => developer[key]);
-    const [item, setItem] = useState({
+    const dev = developer.map((dev)=>
+    {
+        if( dev.id == devId) {
+
+            return dev.id;
+        }
+    });
+
+       const [item, setItem] = useState({
         task_name: data.task_name,
         description: data.description,
         start_date: data.start_date,
         priority: data.priority,
-        developer: [],
+        developer:  dev,
         level: data.level,
         status: data.status,
     });
@@ -121,7 +129,6 @@ export default function Edit({ data, developer, devId ,auth }) {
                                     value={item.task_name}
                                     className="mt-1 block w-full"
                                     autoComplete="task_name"
-                                    // isFocused={true}
                                     onChange={handleChange}
                                     required
                                 />
@@ -357,7 +364,7 @@ export default function Edit({ data, developer, devId ,auth }) {
                                     style={{
                                         height: "33px", marginLeft:"10px"
                                     }}
-                                    >Close</Button>
+                                    >Cancle</Button>
                             </div>
                         </form>
                     </Box>

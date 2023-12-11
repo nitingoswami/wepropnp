@@ -42,6 +42,8 @@ export default function List({ auth, developer, Id, data }) {
         setRowsPerPage(event.target.value, 10);
         setPage(0);
     };
+
+    console.log(auth,'authhhhh');
     return (
         <>
             <div
@@ -52,8 +54,8 @@ export default function List({ auth, developer, Id, data }) {
                 }}
             >
                 {
-                auth.user.user_role !== "hr manager"
-                || auth.user.user_role !== "junior developer" || auth.user.user_role !== "senior developer" && (
+                auth.user.user_role == "admin"
+                && (
                     <Create developer={developer} Id={Id} auth={auth} />
                 )}
             </div>
@@ -154,16 +156,11 @@ export default function List({ auth, developer, Id, data }) {
                                                     </VisibilityIcon>
                                                 </IconButton>
                                                 &emsp;
-                                                { auth.user.user_role !== "hr manager"
-                || auth.user.user_role !== "junior developer" || auth.user.user_role !== "senior developer" && (
+                                                { auth.user.user_role == "admin" && (
                                                     <IconButton aria-label="edit">
                                                         <Edit
-                                                            devId={
-                                                                item.developer_id
-                                                            }
-                                                            developer={
-                                                                developer
-                                                            }
+                                                            devId={item.developer_id}
+                                                            developer={developer }
                                                             data={item}
                                                             auth={auth}
                                                         />
@@ -194,7 +191,8 @@ export default function List({ auth, developer, Id, data }) {
                                                         data={item}
                                                         developer={developer}
                                                         auth={auth}
-                                                    />
+                                                        devId={item.developer_id}
+                                                          />
                                                 </Collapse>
                                             </TableCell>
                                         </TableRow>

@@ -18,7 +18,8 @@ import Edit from "./Edit";
 import StatusPopup from "./StatusPopup";
 import SaveIcon from '@mui/icons-material/Save';
 
-export default function Detail({ data, developer, auth }) {
+export default function Detail({ data, developer, auth ,devId }) {
+    console.log(devId ,'deveve');
     const { item, setItem, get, post, processing, errors, reset } = useForm();
     const [state, setState] = useState({
         status: data.status,
@@ -258,8 +259,10 @@ export default function Detail({ data, developer, auth }) {
 
                 <Box>
                     {developer.map((item, j) => (
-                        <Chip
-                            label={item.name}
+
+                           ( devId == item.id   &&
+                            <Chip
+                            label={ item.name }
                             className="capitalize"
                             sx={{ margin: "10px" }}
                             color={
@@ -268,6 +271,8 @@ export default function Detail({ data, developer, auth }) {
                                     : "success"
                             }
                         />
+                        )
+
                     ))}
                 </Box>
             </Box>

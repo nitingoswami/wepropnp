@@ -175,32 +175,7 @@ export default function Edit({ data, auth, developer, manager, devId }) {
                             />
                         </div>
 
-                        {/* <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="end_date"
-                                    value="End Date"
-                                    style={{ marginLeft: "20px" }}
-                                />
 
-                                <TextInput
-                                    id="end_date"
-                                    type="date"
-                                    name="end_date"
-                                    style={{
-                                        width: "405px",
-                                        marginLeft: "20px",
-                                    }}
-                                    value={item.end_date}
-                                    className="mt-1 block w-full"
-                                    autoComplete="end_date"
-                                    onChange={(e) => handleChange(e)}
-                                    required
-                                />
-                                  <InputError
-                                    message={errors.end_date}
-                                    className="mt-2"
-                                />
-                            </div> */}
                         <div className="mt-4">
                             <InputLabel htmlFor="developer" value="Assign To" />
 

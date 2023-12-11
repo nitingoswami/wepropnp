@@ -9,7 +9,6 @@ import List from "@/Components/Common/Project/Task/List";
 
 export default function View({auth,data, Id, developer}) {
 
-    console.log(auth,'authhh');
      return (
        <>
                 {data.length === 0 ? (

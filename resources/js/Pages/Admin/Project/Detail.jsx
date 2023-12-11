@@ -6,9 +6,9 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ProjectDetail from "./ProjectDetail";
 import View from "../Task/View";
-import History from "./History";
+import History from "../../../Components/Common/Project/History";
+import Details from "@/Components/Common/Project/Details";
 
 export default function Detail({ data, auth, user, task }) {
     console.log(data,'datatattt');
@@ -39,7 +39,7 @@ export default function Detail({ data, auth, user, task }) {
                         <Tab label="History" value="3" style={{ fontWeight:"bold"}}/>
                     </TabList>
                     <TabPanel value="1">
-                        <ProjectDetail data={data} user={user} />
+                        <Details data={data} user={user} auth={auth} />
                     </TabPanel>
 
                     <TabPanel value="2">
