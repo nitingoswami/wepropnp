@@ -52,21 +52,15 @@ export default function Create({ auth, developer, manager }) {
         }));
     };
 
-    console.log(data.developer, "mnagerrr");
-
-    const handleDeveloperSelect = (e) => {
-        const selectedDeveloper = e.target.value;
-        setData("developer", selectedDeveloper);
-        setSelectedDevelopers((prevSelected) => [
-            ...prevSelected,
-            selectedDeveloper,
-        ]);
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("admin.project.save"));
-        setOpen(false);
+        post(route("admin.project.save"),{
+            onSuccess: ( )=> {
+                handleClose();
+                setItem({});
+            }
+        });
     };
     return (
         <div>

@@ -50,9 +50,19 @@ export default function Edit({ auth, user }) {
         e.preventDefault();
         {
             auth.user.user_role == "admin" ?
-            router.post(route("admin.user.update", [user.id]), value)
+            router.post(route("admin.user.update", [user.id]), value ,{
+                onSuccess: ( )=> {
+                    handleClose();
+                    setValue({});
+                }
+            })
             :
-            router.post(route("hrManager.user.update", [user.id]), value);
+            router.post(route("hrManager.user.update", [user.id]), value ,{
+                onSuccess: ( )=> {
+                    handleClose();
+                    setValue({});
+                }
+            });
         }
         setOpen(false);
 

@@ -37,19 +37,16 @@ class UserController extends Controller
         $data = $this->userRepository->save($request);
         $id = $data->id;
         if($data->user_role === 'admin'){
-            dd("not admin");
             return Redirect::back();
         }
         else{
-            dd("hello");
             return Redirect::route('admin.user.salary.create' ,['user'=>$id]);
         }
-        dd("nothing");
     }
 
     public function edit(Request $request , $id){
          $task = $this->userRepository->edit($id);
-        return Inertia::render('Admin/User/Edit', ['user' => $task]);
+         return Inertia::render('Admin/User/Edit', ['user' => $task]);
     }
 
     public function update(Request $request ,$id)
